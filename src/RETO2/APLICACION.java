@@ -24,6 +24,7 @@ public class APLICACION {
 		System.out.println("\n Haga click para iniciar");
 
 	}
+	
 
 	public static ArrayList<Sala> salas() {
 

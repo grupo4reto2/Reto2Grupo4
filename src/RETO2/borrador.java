@@ -45,6 +45,7 @@ public class borrador {
 	}
 	
 	
+	
 
     enum opcionesPelicula {
         Pulp_Fiction, Kung_Fu_Panda, IT

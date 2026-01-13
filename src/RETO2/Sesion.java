@@ -19,6 +19,7 @@ public class Sesion {
 		
 		}
 
+	
 	public String getPelicula() {
 		return pelicula;
 	}

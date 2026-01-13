@@ -38,6 +38,7 @@ public class Compra {
 
 	}
 
+	
 
 
 	public int getIdCompra() {
