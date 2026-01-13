@@ -32,6 +32,7 @@ public class Entrada {
 		this.sesion = sesion;
 	}
 
+	
 	public int getNumEntradas() {
 		return numEntradas;
 	}

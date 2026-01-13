@@ -12,6 +12,7 @@ public class Pelicula {
 		this.duracion = duracion;
 		this.genero = genero;
 		this.precio = precio;
+		
 	}
 
 	public int getId() {

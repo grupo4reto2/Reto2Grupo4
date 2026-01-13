@@ -36,7 +36,6 @@ public class Cliente {
 
 
 
-
 	public String getNombreApellidos() {
 		return nombreApellidos;
 	}
