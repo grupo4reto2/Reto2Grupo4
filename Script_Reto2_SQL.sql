@@ -1,130 +1,116 @@
 CREATE SCHEMA IF NOT EXISTS `reto2_g4` DEFAULT CHARACTER SET utf8mb4;
-USE `reto2_g4`;
+USE`reto2_g4`;
 
 -- =========================
 -- CLIENTE
 -- =========================
-CREATE TABLE cliente (
-  DNICliente VARCHAR(9) NOT NULL,
-  Nombre CHAR(30) NOT NULL,
-  Apellido CHAR(30) NOT NULL,
-  Correo CHAR(30) NOT NULL,
-  Contraseña VARCHAR(20) NOT NULL,
-  PRIMARY KEY (DNICliente)
-) ENGINE=InnoDB;
 
--- =========================
--- SALA
--- =========================
-CREATE TABLE sala (
-  IDSala VARCHAR(3) NOT NULL,
-  NomSala CHAR(30) NOT NULL,
-  Aforo INT UNSIGNED NOT NULL DEFAULT 200,
-  PRIMARY KEY (IDSala)
-) ENGINE=InnoDB;
-
--- =========================
--- SESION
--- =========================
-CREATE TABLE sesion (
-  IDSesion VARCHAR(6) NOT NULL,
-  FecHoraIni TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  FecHoraFin TIMESTAMP NULL,
-  Precio DOUBLE UNSIGNED NOT NULL,
-  IDSala VARCHAR(3) NOT NULL,
-  PRIMARY KEY (IDSesion),
-  CONSTRAINT FK_Sesion_Sala
-    FOREIGN KEY (IDSala)
-    REFERENCES sala (IDSala)
-    ON UPDATE CASCADE
-) ENGINE=InnoDB;
+DROP TABLE IF EXISTS `cliente`;
+CREATE TABLE `cliente` (
+  `DNICliente` varchar(9) NOT NULL,
+  `Nombre` char(30) NOT NULL,
+  `Apellido` char(30) NOT NULL,
+  `Correo` char(30) NOT NULL,
+  `Contraseña` varchar(20) NOT NULL,
+  PRIMARY KEY (`DNICliente`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- =========================
 -- COMPRA
 -- =========================
-CREATE TABLE compra (
-  IDCompra VARCHAR(3) NOT NULL,
-  Fecha TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  DNICliente VARCHAR(9) NOT NULL,
-  descuento DOUBLE NOT NULL,
-  Canal TINYINT NOT NULL,
-  PRIMARY KEY (IDCompra),
-  CONSTRAINT fk_Compra_Cliente
-    FOREIGN KEY (DNICliente)
-    REFERENCES cliente (DNICliente)
-    ON UPDATE CASCADE
-) ENGINE=InnoDB;
+
+DROP TABLE IF EXISTS `compra`;
+CREATE TABLE `compra` (
+  `IDCompra` varchar(3) NOT NULL,
+  `Fecha` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `DNICliente` varchar(9) NOT NULL,
+  `descuento` double NOT NULL,
+  `Canal` tinyint(4) NOT NULL,
+  `Importe` double NOT NULL,
+  PRIMARY KEY (`IDCompra`),
+  KEY `fk_Compra_Cliente` (`DNICliente`),
+  CONSTRAINT `fk_Compra_Cliente` FOREIGN KEY (`DNICliente`) REFERENCES `cliente` (`DNICliente`) ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- =========================
 -- ENTRADA
 -- =========================
-CREATE TABLE entrada (
-  IDEntrada INT UNSIGNED NOT NULL,
-  NumPers INT UNSIGNED NOT NULL,
-  IDSesion VARCHAR(6) NOT NULL,
-  IDCompra VARCHAR(3) NOT NULL,
-  PRIMARY KEY (IDEntrada),
-  CONSTRAINT fk_Entrada_Compra
-    FOREIGN KEY (IDCompra)
-    REFERENCES compra (IDCompra)
-    ON UPDATE CASCADE,
-  CONSTRAINT fk_Entrada_Sesion
-    FOREIGN KEY (IDSesion)
-    REFERENCES sesion (IDSesion)
-    ON UPDATE CASCADE
-) ENGINE=InnoDB;
+
+DROP TABLE IF EXISTS `entrada`;
+CREATE TABLE `entrada` (
+  `IDEntrada` int(10) unsigned NOT NULL,
+  `NumPers` int(10) unsigned NOT NULL,
+  `IDSesion` varchar(6) NOT NULL,
+  `IDCompra` varchar(3) NOT NULL,
+  PRIMARY KEY (`IDEntrada`),
+  KEY `fk_Entrada_Compra` (`IDCompra`),
+  KEY `fk_Entrada_Sesion` (`IDSesion`),
+  CONSTRAINT `fk_Entrada_Compra` FOREIGN KEY (`IDCompra`) REFERENCES `compra` (`IDCompra`) ON UPDATE CASCADE,
+  CONSTRAINT `fk_Entrada_Sesion` FOREIGN KEY (`IDSesion`) REFERENCES `sesion` (`IDSesion`) ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 -- =========================
 -- GENERO
 -- =========================
-CREATE TABLE genero (
-  IDGenero INT UNSIGNED NOT NULL,
-  NomGenero CHAR(20) NOT NULL,
-  PRIMARY KEY (IDGenero)
-) ENGINE=InnoDB;
+
+DROP TABLE IF EXISTS `genero`;
+CREATE TABLE `genero` (
+  `IDGenero` int(10) unsigned NOT NULL,
+  `NomGenero` char(20) NOT NULL,
+  PRIMARY KEY (`IDGenero`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- =========================
 -- PELICULA
 -- =========================
-CREATE TABLE pelicula (
-  IDPelicula INT UNSIGNED NOT NULL,
-  NomPelicula VARCHAR(50) NOT NULL,
-  Duracion INT UNSIGNED NOT NULL,
-  IDGenero INT UNSIGNED NOT NULL,
-  IDSesion VARCHAR(6) NOT NULL,
-  PRIMARY KEY (IDPelicula),
-  CONSTRAINT FK_Pelicula_Genero
-    FOREIGN KEY (IDGenero)
-    REFERENCES genero (IDGenero)
-    ON UPDATE CASCADE,
-  CONSTRAINT FK_Pelicula_Sesion
-    FOREIGN KEY (IDSesion)
-    REFERENCES sesion (IDSesion)
-    ON UPDATE CASCADE
-) ENGINE=InnoDB;
 
-insert into Sala (IDSala, NomSala, Aforo)
-values ('S01', 'Sala 1', 200);
-insert into Sala (IDSala, NomSala, Aforo)
-values ('S02', 'Sala 2', 200);
+DROP TABLE IF EXISTS `pelicula`;
+CREATE TABLE `pelicula` (
+  `IDPelicula` int(10) unsigned NOT NULL,
+  `NomPelicula` varchar(50) NOT NULL,
+  `Duracion` int(10) unsigned NOT NULL,
+  `IDGenero` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`IDPelicula`),
+  KEY `FK_Pelicula_Genero` (`IDGenero`),
+  CONSTRAINT `FK_Pelicula_Genero` FOREIGN KEY (`IDGenero`) REFERENCES `genero` (`IDGenero`) ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-insert into Sesion(IDSesion, FecHoraIni, FecHoraFin, Precio, IDSala)
-values('S01-01', '2026-01-16 16:00:00', '2026-01-16 18:00:00', 7.5, 'S01');
-insert into Sesion(IDSesion, FecHoraIni, FecHoraFin, Precio, IDSala)
-values('S02-02', '2026-01-16 16:00:00', '2026-01-16 18:00:00', 7.5, 'S02');
+-- =========================
+-- SALA
+-- =========================
 
-insert into Genero (IDGenero, NomGenero)
-values (1, 'Animación');
+DROP TABLE IF EXISTS `sala`;
+CREATE TABLE `sala` (
+  `IDSala` varchar(3) NOT NULL,
+  `NomSala` char(30) NOT NULL,
+  `Aforo` int(10) unsigned NOT NULL DEFAULT 200,
+  PRIMARY KEY (`IDSala`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- =========================
+-- SESION
+-- =========================
 
-insert into Pelicula values(1, 'El Rey León', 88, 1,'S01-01');
-insert into Pelicula values(1, 'El Rey León', 88, 1,'S02-02');
-insert into Pelicula values();
-insert into Pelicula values();
-insert into Pelicula values();
-insert into Pelicula values();
-insert into Pelicula values();
-insert into Pelicula values();
-insert into Pelicula values();
-insert into Pelicula values();
+DROP TABLE IF EXISTS `sesion`;
+CREATE TABLE `sesion` (
+  `IDSesion` varchar(6) NOT NULL,
+  `FecHoraIni` timestamp NOT NULL DEFAULT current_timestamp(),
+  `FecHoraFin` timestamp NULL DEFAULT NULL,
+  `Precio` double unsigned NOT NULL,
+  `IDSala` varchar(3) NOT NULL,
+  `IDPelicula` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`IDSesion`),
+  KEY `FK_Sesion_Sala` (`IDSala`),
+  KEY `FK_Sesion_Pelicula` (`IDPelicula`),
+  CONSTRAINT `FK_Sesion_Pelicula` FOREIGN KEY (`IDPelicula`) REFERENCES `pelicula` (`IDPelicula`) ON UPDATE CASCADE,
+  CONSTRAINT `FK_Sesion_Sala` FOREIGN KEY (`IDSala`) REFERENCES `sala` (`IDSala`) ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+insert into Sala(IDSala, NomSala, Aforo)
+values('S01', 'Sala 1', 200),
+('S02', 'Sala 2', 200);
+
+Update Pelicula
+Set Caratula = 'https://imgs.search.brave.com/1fyE5g2uMLQXGifPBcEBod79aHjSjz-KlDjWQjLJ3vk/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL00v/TVY1Qll6Y3labVl6/WldNdE1qUmlNeTAw/WXpsakxUazFObUl0/TjJFM016bGhObVUz/TlRjelhrRXlYa0Zx/Y0djQC5qcGc'
+Where IDPelicula = 5;
