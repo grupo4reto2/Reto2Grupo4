@@ -15,6 +15,9 @@ CREATE TABLE `cliente` (
   PRIMARY KEY (`DNICliente`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+alter table cliente
+modify Correo varchar(30) not null; 
+
 -- =========================
 -- COMPRA
 -- =========================
@@ -76,6 +79,8 @@ CREATE TABLE `pelicula` (
   CONSTRAINT `FK_Pelicula_Genero` FOREIGN KEY (`IDGenero`) REFERENCES `genero` (`IDGenero`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+alter table pelicula
+add Portada varchar(255) not null;
 -- =========================
 -- SALA
 -- =========================
@@ -107,10 +112,79 @@ CREATE TABLE `sesion` (
   CONSTRAINT `FK_Sesion_Sala` FOREIGN KEY (`IDSala`) REFERENCES `sala` (`IDSala`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-insert into Sala(IDSala, NomSala, Aforo)
-values('S01', 'Sala 1', 200),
-('S02', 'Sala 2', 200);
+insert into Genero(IDGenero, NomGenero)
+values
+(1,'Animación'),
+(2,'Horror'),
+(3,'Thriller'),
+(4,'Comedia'),
+(5,'Bélico');
+
+insert into Pelicula (IDPelicula, NomPelicula, Duracion, IDGenero)
+values
+(1,'El Rey Leon', 88, 1),
+(2,'No respires', 88, 2),
+(3,'Senderos de gloria', 86, 5),
+(4,'Cop Car', 88, 3),
+(5,'¡Aterriza como puedas!' , 92, 4);
+
+INSERT INTO Sala (IDSala, NomSala, Aforo)
+VALUES 
+('S01', 'Sala 1', '150'),
+('S02', 'Sala 2', '100'),
+('S03', 'Sala 3', '150'),
+('S04', 'Sala 4', '100'),
+('S05', 'Sala 5', '150'),
+('S06', 'Sala 6', '100');
+
+DELETE FROM `reto2_g4`.`sala` WHERE (`IDSala` = 'S06');
+
+INSERT INTO `reto2_g4`.`sesion` (`IDSesion`, `FecHoraIni`, `FecHoraFin`, `Precio`, `IDSala`, `IDPelicula`) VALUES ('S02-01', '2026-01-15 10:00:00', '2026-01-15 12:00:00', '6', 'S02', '2');
+INSERT INTO `reto2_g4`.`sesion` (`IDSesion`, `FecHoraIni`, `FecHoraFin`, `Precio`, `IDSala`, `IDPelicula`) VALUES ('S02-02', '2026-01-15 12:00:00', '2026-01-15 14:00:00', '6', 'S02', '2');
+INSERT INTO `reto2_g4`.`sesion` (`IDSesion`, `FecHoraIni`, `FecHoraFin`, `Precio`, `IDSala`, `IDPelicula`) VALUES ('S02-03', '2026-01-15 14:00:00', '2026-01-15 16:00:00', '6', 'S02', '2');
+INSERT INTO `reto2_g4`.`sesion` (`IDSesion`, `FecHoraIni`, `FecHoraFin`, `Precio`, `IDSala`, `IDPelicula`) VALUES ('S02-04', '2026-01-15 16:00:00', '2026-01-15 18:00:00', '9.5', 'S02', '2');
+INSERT INTO `reto2_g4`.`sesion` (`IDSesion`, `FecHoraIni`, `FecHoraFin`, `Precio`, `IDSala`, `IDPelicula`) VALUES ('S02-05', '2026-01-15 18:00:00', '2026-01-15 20:00:00', '9.5', 'S02', '2');
+INSERT INTO `reto2_g4`.`sesion` (`IDSesion`, `FecHoraIni`, `FecHoraFin`, `Precio`, `IDSala`, `IDPelicula`) VALUES ('S02-06', '2026-01-15 20:00:00', '2026-01-15 22:00:00', '9.5', 'S02', '2');
+INSERT INTO `reto2_g4`.`sesion` (`IDSesion`, `FecHoraIni`, `FecHoraFin`, `Precio`, `IDSala`, `IDPelicula`) VALUES ('S02-07', '2026-01-15 22:00:00', '2026-01-16 00:00:00', '12', 'S02', '2');
+INSERT INTO `reto2_g4`.`sesion` (`IDSesion`, `FecHoraIni`, `FecHoraFin`, `Precio`, `IDSala`, `IDPelicula`) VALUES ('S02-08', '2026-01-16 00:00:00', '2026-01-16 02:00:00', '12', 'S02', '2');
+INSERT INTO `reto2_g4`.`sesion` (`IDSesion`, `FecHoraIni`, `FecHoraFin`, `Precio`, `IDSala`, `IDPelicula`) VALUES ('S03-01', '2026-01-15 10:00:00', '2026-01-15 12:00:00', '6', 'S03', '3');
+INSERT INTO `reto2_g4`.`sesion` (`IDSesion`, `FecHoraIni`, `FecHoraFin`, `Precio`, `IDSala`, `IDPelicula`) VALUES ('S03-02', '2026-01-15 12:00:00', '2026-01-15 14:00:00', '6', 'S03', '3');
+INSERT INTO `reto2_g4`.`sesion` (`IDSesion`, `FecHoraIni`, `FecHoraFin`, `Precio`, `IDSala`, `IDPelicula`) VALUES ('S03-03', '2026-01-15 14:00:00', '2026-01-15 16:00:00', '6', 'S03', '3');
+INSERT INTO `reto2_g4`.`sesion` (`IDSesion`, `FecHoraIni`, `FecHoraFin`, `Precio`, `IDSala`, `IDPelicula`) VALUES ('S03-04', '2026-01-15 16:00:00', '2026-01-15 18:00:00', '9.5', 'S03', '3');
+INSERT INTO `reto2_g4`.`sesion` (`IDSesion`, `FecHoraIni`, `FecHoraFin`, `Precio`, `IDSala`, `IDPelicula`) VALUES ('S03-05', '2026-01-15 18:00:00', '2026-01-15 20:00:00', '9.5', 'S03', '3');
+INSERT INTO `reto2_g4`.`sesion` (`IDSesion`, `FecHoraIni`, `FecHoraFin`, `Precio`, `IDSala`, `IDPelicula`) VALUES ('S03-06', '2026-01-15 20:00:00', '2026-01-15 22:00:00', '9.5', 'S03', '3');
+INSERT INTO `reto2_g4`.`sesion` (`IDSesion`, `FecHoraIni`, `FecHoraFin`, `Precio`, `IDSala`, `IDPelicula`) VALUES ('S03-07', '2026-01-15 22:00:00', '2026-01-16 00:00:00', '12', 'S03', '3');
+INSERT INTO `reto2_g4`.`sesion` (`IDSesion`, `FecHoraIni`, `FecHoraFin`, `Precio`, `IDSala`, `IDPelicula`) VALUES ('S03-08', '2026-01-16 00:00:00', '2026-01-16 02:00:00', '12', 'S03', '3');
+UPDATE `reto2_g4`.`sesion` SET `Precio` = '12' WHERE (`IDSesion` = 'S01-07');
+UPDATE `reto2_g4`.`sesion` SET `Precio` = '12' WHERE (`IDSesion` = 'S01-08');
+INSERT INTO `reto2_g4`.`sesion` (`IDSesion`, `FecHoraIni`, `FecHoraFin`, `Precio`, `IDSala`, `IDPelicula`) VALUES ('S04-01', '2026-01-15 10:00:00', '2026-01-15 12:00:00', '6', 'S04', '4');
+INSERT INTO `reto2_g4`.`sesion` (`IDSesion`, `FecHoraIni`, `FecHoraFin`, `Precio`, `IDSala`, `IDPelicula`) VALUES ('S04-02', '2026-01-15 12:00:00', '2026-01-15 14:00:00', '6', 'S04', '4');
+INSERT INTO `reto2_g4`.`sesion` (`IDSesion`, `FecHoraIni`, `FecHoraFin`, `Precio`, `IDSala`, `IDPelicula`) VALUES ('S04-03', '2026-01-15 14:00:00', '2026-01-15 16:00:00', '6', 'S04', '4');
+INSERT INTO `reto2_g4`.`sesion` (`IDSesion`, `FecHoraIni`, `FecHoraFin`, `Precio`, `IDSala`, `IDPelicula`) VALUES ('S04-04', '2026-01-15 16:00:00', '2026-01-15 18:00:00', '9.5', 'S04', '4');
+INSERT INTO `reto2_g4`.`sesion` (`IDSesion`, `FecHoraIni`, `FecHoraFin`, `Precio`, `IDSala`, `IDPelicula`) VALUES ('S04-05', '2026-01-15 18:00:00', '2026-01-15 20:00:00', '9.5', 'S04', '4');
+INSERT INTO `reto2_g4`.`sesion` (`IDSesion`, `FecHoraIni`, `FecHoraFin`, `Precio`, `IDSala`, `IDPelicula`) VALUES ('S04-06', '2026-01-15 20:00:00', '2026-01-15 22:00:00', '9.5', 'S04', '4');
+INSERT INTO `reto2_g4`.`sesion` (`IDSesion`, `FecHoraIni`, `FecHoraFin`, `Precio`, `IDSala`, `IDPelicula`) VALUES ('S04-07', '2026-01-15 22:00:00', '2026-01-16 00:00:00', '12', 'S04', '4');
+INSERT INTO `reto2_g4`.`sesion` (`IDSesion`, `FecHoraIni`, `FecHoraFin`, `Precio`, `IDSala`, `IDPelicula`) VALUES ('S04-08', '2026-01-16 00:00:00', '2026-01-16 02:00:00', '12', 'S04', '4');
+INSERT INTO `reto2_g4`.`sesion` (`IDSesion`, `FecHoraIni`, `FecHoraFin`, `Precio`, `IDSala`, `IDPelicula`) VALUES ('S05-01', '2026-01-15 10:00:00', '2026-01-15 12:00:00', '6', 'S05', '5');
+INSERT INTO `reto2_g4`.`sesion` (`IDSesion`, `FecHoraIni`, `FecHoraFin`, `Precio`, `IDSala`, `IDPelicula`) VALUES ('S05-02', '2026-01-15 12:00:00', '2026-01-15 14:00:00', '6', 'S05', '5');
+INSERT INTO `reto2_g4`.`sesion` (`IDSesion`, `FecHoraIni`, `FecHoraFin`, `Precio`, `IDSala`, `IDPelicula`) VALUES ('S05-03', '2026-01-15 14:00:00', '2026-01-15 16:00:00', '6', 'S05', '5');
+INSERT INTO `reto2_g4`.`sesion` (`IDSesion`, `FecHoraIni`, `FecHoraFin`, `Precio`, `IDSala`, `IDPelicula`) VALUES ('S05-04', '2026-01-15 16:00:00', '2026-01-15 18:00:00', '9.5', 'S05', '5');
+INSERT INTO `reto2_g4`.`sesion` (`IDSesion`, `FecHoraIni`, `FecHoraFin`, `Precio`, `IDSala`, `IDPelicula`) VALUES ('S05-05', '2026-01-15 18:00:00', '2026-01-15 20:00:00', '9.5', 'S05', '5');
+INSERT INTO `reto2_g4`.`sesion` (`IDSesion`, `FecHoraIni`, `FecHoraFin`, `Precio`, `IDSala`, `IDPelicula`) VALUES ('S05-06', '2026-01-15 20:00:00', '2026-01-15 22:00:00', '9.5', 'S05', '5');
+INSERT INTO `reto2_g4`.`sesion` (`IDSesion`, `FecHoraIni`, `FecHoraFin`, `Precio`, `IDSala`, `IDPelicula`) VALUES ('S05-07', '2026-01-15 22:00:00', '2026-01-16 00:00:00', '12', 'S05', '5');
+INSERT INTO `reto2_g4`.`sesion` (`IDSesion`, `FecHoraIni`, `FecHoraFin`, `Precio`, `IDSala`, `IDPelicula`) VALUES ('S05-08', '2026-01-16 00:00:00', '2026-01-16 02:00:00', '12', 'S05', '5');
+
+
+insert into Cliente (DNICliente, Nombre, Apellido, Correo, Contraseña)
+values
+('67856221B', 'Julio', 'Verne', 'jverne@gmail.com', 'JVerne00-'),
+('76466993C', 'Charles', 'Chaplin', 'tiemposModernos@gmail.com', 'Oona O neill');
+
+insert into Compra (IDCompra, Fecha, DNICliente, descuento, Canal, Importe)
+values
+('C01', '2026-01-15 17:30:00', '67856221B', '0.00', 'Pagina Web', ''),
+('C02', '2026-01-16 16:00:00', '76466993C', '0.00', 'Pagina Web', '');
 
 Update Pelicula
-Set Caratula = 'https://imgs.search.brave.com/1fyE5g2uMLQXGifPBcEBod79aHjSjz-KlDjWQjLJ3vk/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL00v/TVY1Qll6Y3labVl6/WldNdE1qUmlNeTAw/WXpsakxUazFObUl0/TjJFM016bGhObVUz/TlRjelhrRXlYa0Zx/Y0djQC5qcGc'
+Set Portada = 'https://imgs.search.brave.com/1fyE5g2uMLQXGifPBcEBod79aHjSjz-KlDjWQjLJ3vk/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL00v/TVY1Qll6Y3labVl6/WldNdE1qUmlNeTAw/WXpsakxUazFObUl0/TjJFM016bGhObVUz/TlRjelhrRXlYa0Zx/Y0djQC5qcGc'
 Where IDPelicula = 5;
