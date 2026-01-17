@@ -1,11 +1,17 @@
 package RETO2;
+
 import java.util.Scanner;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+
+
 
 public class borrador {
-	
+
 	private static void mensajeBienvenida () {
 
 		String negrita = "\033[1m";
@@ -16,137 +22,152 @@ public class borrador {
 
 		System.out.println("_______________________________|");
 
-		
 
 		System.out.println("\n Haga click para iniciar");
-		
+
+
 	}
 	
-	private static void mostrarSesion(Sesion sesion, Sesion sesion2, Pelicula pelicula) {
+	
+	private static String fechaFormateada () {
 		
 		LocalDateTime mañana = LocalDateTime.now().plusDays(1);
-		DateTimeFormatter formatearFecha = DateTimeFormatter.ofPattern("d MMMM",  new Locale ("Ja"));
-		String fechaTexto = mañana.format(formatearFecha);
+		DateTimeFormatter fechaFormateada = DateTimeFormatter.ofPattern("d MMMM", new Locale("es"));
+		String fechaTexto = mañana.format(fechaFormateada);
 		
-		System.out.println("\nSeleccionada: " + sesion.getPelicula());
-		
-		System.out.println("\nHorarios " + fechaTexto + " "+ "(" + sesion.getPelicula() + ")\n");
-		
-		System.out.println(
-				
-							//SESION 1
-							sesion.getFechaInicio().toLocalTime() + " - " + sesion.getPelicula() + 
-							" " + "(" + sesion.getSala() + ") - " + sesion.getPrecio() + " € \n" + 
-				
-							//SESION 2
-							sesion2.getFechaInicio().toLocalTime() + " - " + sesion2.getPelicula() + 
-							" " + "(" + sesion2.getSala() + ") - " + sesion2.getPrecio() + " €");
+		return fechaTexto;
 		
 	}
 	
 	
 	
+	
+	private static void mostrarSesion (ArrayList<Sesion> sesiones, String nombrePelicula) {
+		
+		String fechaTexto = fechaFormateada();
+		
+		System.out.println("\nSeleccionada: " + sesiones.get(0).getNomPelicula());
+		System.out.println("\nHorarios: " + fechaTexto + " (" + sesiones.get(0).getNomPelicula() + ")\n ");
+		
+		for (int i= 0; i < sesiones.size(); i++) {
+			
+			if(sesiones.get(i).getNomPelicula().equals(nombrePelicula)) {
+				
+				System.out.println(
+						
+						sesiones.get(i).getFechaInicio().toLocalTime() + 
+						" - " + nombrePelicula + 
+						" (" + sesiones.get(i).getSala().getNombre() + ")" +
+						" - " + sesiones.get(i).getPrecio() + "€\n"
+						
+						);
 
-    enum opcionesPelicula {
-        Pulp_Fiction, Kung_Fu_Panda, IT
-    }
+			}
+				
+			}
+			
+		
+	}
+	
 
-    public static void main(String[] args) {
-    	
-    	Scanner teclado = new Scanner(System.in);
-    	
-    	Pelicula peliculaPulpFiction = new Pelicula(4549, 154, "Crimen/thriller/comedia negra", 7.50);
-    	Pelicula peliculaKungFuPanda = new Pelicula(4570,92, "Infantil/comedia", 10.50);
-    	Pelicula peliculaIT = new Pelicula(4578, 135, "Horror/suspense", 10.50);
-    	
-    	
-    	Sala salaPulpFiction = new Sala("Sala 4", 343);
-    	Sala salaKungFuPanda = new Sala("Sala 2", 321);
-    	Sala salaIT = new Sala("Sala 1", 314);
-    	
-    	Sesion sesionPulpFiction1 = new Sesion(7877,LocalDateTime.of(2026,2,1,13,00,0), LocalDateTime.of(2026,2,1,15,30,0), salaPulpFiction, 7.50, "Pulp Fiction");
-    	Sesion sesionKungFuPanda1 = new Sesion(7656,LocalDateTime.of(2026,2,1,18,00,0), LocalDateTime.of(2026,2,1,19,30,0), salaKungFuPanda, 10.50, "Kung Fu Panda");
-    	Sesion sesionIT1 = new Sesion(7754,LocalDateTime.of(2026,2,1,18,30,0), LocalDateTime.of(2026,2,1,20,45,0), salaIT, 10.50, "IT");
-    	
-    	Sesion sesionPulpFiction2 = new Sesion(7869,LocalDateTime.of(2026,2,1,17,00,0), LocalDateTime.of(2026,2,1,19,30,0), salaPulpFiction, 10.50, "Pulp Fiction");
-    	Sesion sesionKungFuPanda2 = new Sesion(7699,LocalDateTime.of(2026,2,1,21,00,0), LocalDateTime.of(2026,2,1,22,30,0), salaKungFuPanda, 10.50, "Kung Fu Panda");
-    	Sesion sesionIT2 = new Sesion(7750,LocalDateTime.of(2026,2,1,21,30,0), LocalDateTime.of(2026,2,1,23,45,0), salaIT, 10.50, "IT");
-    	
-    	
-    	mensajeBienvenida();
-    	teclado.nextLine();
-    	
-    	System.out.println("Cartelera:");
-    	System.out.println("\n 1. - Pulp Fiction");
-    	System.out.println("\n 2. - Kung Fu Panda");
-    	System.out.println("\n 3. - IT");
+	public static void main(String[] args) {
+		
+		Scanner teclado = new Scanner(System.in);
+		
+		mensajeBienvenida();
+		teclado.nextLine();
+		
+		//SALASSS
+		
+		ArrayList<Sala> salas = new ArrayList<>();
+		
+		salas.add( new Sala ("Sala 1" , "S01" , 150));
+		salas.add(new Sala ("Sala 2" , "S02" , 100));
+		salas.add(new Sala ("Sala 3" , "S03" , 150));
+		salas.add(new Sala("Sala 4" , "S04", 100));
+		salas.add(new Sala("Sala 5" , "S05" , 150));
+		
+		//PELICULAS (STRING)
+		
+		ArrayList<String> peliculas = new ArrayList<>();
+		peliculas.add("El Rey León");
+		peliculas.add("No Respires");
+		peliculas.add("Senderos de Gloria");
+		peliculas.add("Cop Car");
+		peliculas.add("¡Aterriza Como Puedas!");
+		
+		//SESIONESSSS
+		
+		ArrayList<Sesion> sesiones = new ArrayList<>();
+		
+		for (int p = 0; p < peliculas.size(); p++) {
+			for (int s = 1; s <=8; s++) {
+				double precio;
+				
+				if(s <= 3) {
+					precio = 6;
+				} else if (s <=6) {
+					precio = 9.50;
+				} else {
+					precio = 12;
+				}
+				
+				sesiones.add(new Sesion (
+						
+						String.format("S%02d-%02d" , p + 1, s), 
+						LocalDateTime.of(2026,1,1,10,0,0).plusHours(2 * (s - 1)),
+						LocalDateTime.of(2026,1,1,12,0,0).plusHours(2 * (s - 1)),
+						salas.get(p),
+						precio,
+						peliculas.get(p)
+						
+						));
+				
+			}
+			
+		}
+		
+		
+		//SESIONES POR FECHA Y HORA
+		
+		Collections.sort(sesiones, Comparator.comparing(Sesion:: getFechaInicio));
+		
+		
+		//CARTELERAAA
+		
+		System.out.println("Cartelera: ");
+		
+		for (int i = 0; i < peliculas.size(); i++) {
+			
+			System.out.println(i + 1 + " - " + peliculas.get(i));
+			
+		}
+		
+		
+		//SELECCIÓNNNNN
+		
+		int opcion = teclado.nextInt();
+		
+		switch(opcion) {
+		
+		case 1: mostrarSesion(sesiones, "El Rey León");
+		break;
+		
+		case 2: mostrarSesion(sesiones, "No Respires");
+		break;
+		
+		case 3: mostrarSesion(sesiones, "Senderos de Gloria");
+		break;
+		
+		case 4: mostrarSesion(sesiones, "Cop Car");
+		break;
+		
+		case 5: mostrarSesion(sesiones, "¡Aterriza Como Puedas!");
+		break;
+		
+		}
+		
 
-    	int opcion = teclado.nextInt();
-    	
-    	opcionesPelicula eleccion;
-    	
-    	switch (opcion) {
-    	
-    	case 1: eleccion = opcionesPelicula.Pulp_Fiction;
-    			break;
-    	case 2: eleccion = opcionesPelicula.Kung_Fu_Panda;
-    			break;
-    	case 3: eleccion = opcionesPelicula.IT;
-    			break;
-    	default: System.out.println("Opcion no valida");
-    			return;
-    	
-    	}
-    	
-    	
-    	
-    	switch (eleccion) {
-    	
-    	case Pulp_Fiction:
-    		mostrarSesion(sesionPulpFiction1, sesionPulpFiction2, peliculaPulpFiction);
-    		break;
-    		
-    	case Kung_Fu_Panda:
-    		mostrarSesion(sesionKungFuPanda1, sesionKungFuPanda2, peliculaKungFuPanda);
-    		break;
-    	
-    	case IT:
-    		mostrarSesion(sesionIT1, sesionIT2, peliculaIT);
-    		break;
-    		
-    	
-    	}
-    	
-    	teclado.close();
-    	
-    	
-    }
+	}
+
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

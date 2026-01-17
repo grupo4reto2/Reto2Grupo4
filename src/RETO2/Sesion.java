@@ -2,14 +2,14 @@ package RETO2;
 import java.time.LocalDateTime;
 public class Sesion {
 
-	private int idSesion;
+	private String idSesion;
 	private LocalDateTime fechaInicio;
 	private LocalDateTime fechaFin;
 	private Sala sala;
 	private double precio;
-	private Pelicula nomPelicula;
+	private String nomPelicula;
 	
-	public Sesion (int idSesion, LocalDateTime fechaInicio, LocalDateTime fechaFin, Sala sala, double precio, Pelicula nomPelicula) {
+	public Sesion (String idSesion, LocalDateTime fechaInicio, LocalDateTime fechaFin, Sala sala, double precio, String nomPelicula) {
 		this.idSesion = idSesion;
 		this.fechaInicio = fechaInicio;
 		this.fechaFin = fechaFin;
@@ -20,19 +20,19 @@ public class Sesion {
 		}
 
 	
-	public Pelicula getNomPelicula() {
+	public String getNomPelicula() {
 		return nomPelicula;
 	}
 
-	public void setNomPelicula(Pelicula nomPelicula) {
+	public void setNomPelicula(String nomPelicula) {
 		this.nomPelicula= nomPelicula;
 	}
 
-	public int getIdSesion() {
+	public String getIdSesion() {
 		return idSesion;
 	}
 
-	public void setIdSesion(int idSesion) {
+	public void setIdSesion(String idSesion) {
 		this.idSesion = idSesion;
 	}
 
@@ -52,7 +52,7 @@ public class Sesion {
 		this.fechaFin = fechaFin;
 	}
 
-	public Sala getsala() {
+	public Sala getSala() {
 		return sala;
 	}
 
@@ -78,7 +78,7 @@ public class Sesion {
 				" Fin: " + fechaFin +
 				" Sala: " + sala.getNombre() + 
 				" Precio: " + precio +
-				" Película: " + pelicula;
+				" Película: " + nomPelicula;
 	}
 	
 }

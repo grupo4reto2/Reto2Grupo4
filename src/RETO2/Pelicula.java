@@ -64,7 +64,7 @@ public class Pelicula {
 		return  " ID: " + idPelicula +
 				" Pelicula " + nomPelicula +
 				" Duración: " + duracion + " min" + 
-				" Género: " + idGenero + genero + 
+				" Género: " + idGenero ;
 	}
 	
 }

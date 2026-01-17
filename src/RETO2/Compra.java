@@ -10,16 +10,14 @@ public class Compra {
 
 	private Cliente cliente;
 
-	private  Cliente dniCliente;
-
-	private LocalDateTime fechaHora;
-
-	private double descuento;
+	private LocalDateTime fechaCompra;
 
 	private double importe;
 
+	private double descuento;
+
 	
-	public Compra (int idCompra, Entrada numEntradas, Cliente cliente, Cliente dniCliente, LocalDateTime fechaHora, double precio, double descuento, double importe) {
+	public Compra (int idCompra, Entrada numEntradas, Cliente nomCliente, Cliente cliente, LocalDateTime fechaCompra,  double importe, double descuento) {
 
 		this.idCompra = idCompra;
 
@@ -27,102 +25,136 @@ public class Compra {
 
 		this.cliente = cliente;
 
-		this.dniCliente = dniCliente
-
-		this.fechaHora = fechaHora;
-
-		this.descuento = descuento;
+		this.fechaCompra = fechaCompra;
 
 		this.importe = importe;
 
+		this.descuento = descuento;
+		
 	}
+
 
 	
+
+
+
 	public int getIdCompra() {
 		return idCompra;
-
 	}
+
+
+
+
+
 
 	public void setIdCompra(int idCompra) {
 		this.idCompra = idCompra;
-
 	}
+
+
+
+
+
 
 	public Entrada getNumEntradas() {
 		return numEntradas;
-
 	}
+
+
+
+
+
 
 	public void setNumEntradas(Entrada numEntradas) {
 		this.numEntradas = numEntradas;
-
 	}
+
+
+
+
+
 
 	public Cliente getCliente() {
 		return cliente;
-
 	}
+
+
+
+
+
 
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
-
 	}
 
-	public Cliente getDNICliente() {
-		return cliente;
 
+
+
+
+
+	public LocalDateTime getFechaCompra() {
+		return fechaCompra;
 	}
 
-	public void setDNICliente(Cliente dniCliente) {
-		this.dniCliente = dniCliente;
 
+
+
+
+
+	public void setFechaCompra(LocalDateTime fechaCompra) {
+		this.fechaCompra = fechaCompra;
 	}
 
-	public LocalDateTime getFechaHora() {
-		return fechaHora;
 
-	}
 
-	public void setFechaHora(LocalDateTime fechaHora) {
-		this.fechaHora = fechaHora;
 
-	}
 
-	public double getPrecio() {
-		return precio;
-
-	}
-
-	public void setPrecio(double precio) {
-		this.precio = precio;
-
-	}
-
-	public double getDescuento() {
-		return descuento;
-	}
-	
-	public void setDescuento(double descuento) {
-		this.descuento = descuento;
-	}
 
 	public double getImporte() {
 		return importe;
 	}
-	
-	public void setDescuento(double descuento) {
+
+
+
+
+
+
+	public void setImporte(double importe) {
 		this.importe = importe;
 	}
+
+
+
+
+
+
+	public double getDescuento() {
+		return descuento;
+	}
+
+
+
+
+
+
+	public void setDescuento(double descuento) {
+		this.descuento = descuento;
+	}
+
+
+
+
+
 
 	@Override 
 
 	public String toString() {
 		
 		return "ID compra: " + idCompra +
-				" Número entradas: " + numEntradas.getNumEntradas() + 
-				" Cliente: " + cliente.getNombre() + cliente.getApellido() +
-				" DNICliente: " + dniCliente.getdniCliente() +
-				" Fecha y hora de la compra: " + fechaHora.getFechaHora () +
+				" Número entradas: " + numEntradas.getNumPersonas() + 
+				" Cliente: " + cliente.getNombre() + " " + cliente.getApellido() +
+				" DNICliente: " + cliente.getDni() +
+				" Fecha y hora de la compra: " + fechaCompra +
 				" Importe de la compra: " + importe +
 				" Descuento aplicado: " + descuento;
 				

@@ -3,60 +3,84 @@ package RETO2;
 public class Entrada {
 
 	private int idEntrada;
-	private Sesion Sesion;
+	private Sesion sesion;
 	private int numPersonas;
-	private Compra IDCompra;
+	private Compra idCompra;
 	
-	public Entrada (int idEntrada, Sesion Sesion, int numPersonas, Compra IDCompra) {
+	public Entrada (int idEntrada, Sesion sesion, int numPersonas, Compra idCompra) {
 		this.idEntrada = idEntrada;
 		this.sesion = sesion;
 		this.numPersonas = numPersonas;
 		this.idCompra = idCompra;
 	}
 
-	public Compra getIDCompra() {
-		return idCompra;
-	}
+	
 
-	public void setIDCompra(Compra idCompra) {
-		this.idCompra = idCompra;
-	}
-
-		
+	
 	public int getIdEntrada() {
 		return idEntrada;
 	}
+
+
+
 
 	public void setIdEntrada(int idEntrada) {
 		this.idEntrada = idEntrada;
 	}
 
+
+
+
 	public Sesion getSesion() {
 		return sesion;
 	}
 
-	public void setSesion(Sesion Sesion) {
+
+
+
+	public void setSesion(Sesion sesion) {
 		this.sesion = sesion;
 	}
 
-	
-	public int getnumPersonas() {
+
+
+
+	public int getNumPersonas() {
 		return numPersonas;
 	}
 
-	public void setnumPersonas(int numPersonas) {
+
+
+
+	public void setNumPersonas(int numPersonas) {
 		this.numPersonas = numPersonas;
 	}
 
-	
+
+
+
+	public Compra getIdCompra() {
+		return idCompra;
+	}
+
+
+
+
+	public void setIdCompra(Compra idCompra) {
+		this.idCompra = idCompra;
+	}
+
+
+
+
 	@Override 
 	
 	public String toString() {
 		
 		return "ID entrada: " + idEntrada +
-			   " Sesión: " + sesion.getSesion() +
+			   " Sesión: " + sesion.getIdSesion() +
 			   " Número de personas: " + numPersonas + 
-				" ID de Compra: " + compra.getIDCompra();
+				" ID de Compra: " + idCompra.getIdCompra();
 			 
 	}
 	

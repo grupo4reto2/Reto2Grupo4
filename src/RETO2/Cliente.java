@@ -3,17 +3,17 @@ package RETO2;
 public class Cliente {
 
 	private String dni;
-	private String nombre
-	private string apellido;
+	private String nombre;
+	private String apellido;
 	private String correo;
-	private String contrasena;
+	private String contraseña;
 	
-	public Cliente (String dni, String nombre, String apellido, String correo, String contrasena) {
+	public Cliente (String dni, String nombre, String apellido, String correo, String contraseña) {
 		this.dni = dni;
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.correo = correo;
-		this.contrasena = contrasena;
+		this.contraseña = contraseña;
 	}
 
 	public String getDni() {
@@ -50,20 +50,20 @@ public class Cliente {
 	}
 
 	public String getcontrasena() {
-		return contrasena;
+		return contraseña;
 	}
 
-	public void setcontrasena(String contrasena) {
-		this.contrasena = contrasena;
+	public void setcontraseña(String contrasena) {
+		this.contraseña = contrasena;
 	}
 
 	@Override 
 	
 	public String toString() {
-		return  "DNI: " + dni +
-				" Cliente: " + nombre + apellido +
-				" Correo electrónico: " + correo + 
-				" contrasena: " + contrasena;
+		return  "DNI: " + dni + "\n" +
+				" Cliente: " + nombre + " " + apellido + "\n" +
+				" Correo electrónico: " + correo + "\n" +
+				" Contrasena: " + contraseña;
 	}
 	
 }
