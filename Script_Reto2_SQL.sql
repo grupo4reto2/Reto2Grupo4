@@ -156,6 +156,19 @@ VALUES
 ('S06', 'Sala 6', '100');
 DELETE FROM `reto2_g4`.`sala` WHERE (`IDSala` = 'S06');
 
+INSERT INTO Entrada(IDEntrada, NumPers, IDSesion, IDCompra, FecHoraIni)
+VALUES 
+(1, 50, 'S01-01', 'C01', '2026-01-15 10:00:00'),
+(2, 20, 'S01-02', 'C02', '2026-01-15 12:00:00'),
+(3, 15, 'S01-03', 'C03', '2026-01-15 14:00:00'),
+(4, 20, 'S01-04', 'C04', '2026-01-15 16:00:00'),
+(5, 25, 'S01-05', 'C01', '2026-01-15 18:00:00'),
+(6, 30, 'S01-06', 'C02', '2026-01-15 20:00:00'),
+(7, 12, 'S01-07', 'C03', '2026-01-15 22:00:00'),
+(8, 18, 'S01-08', 'C04', '2026-01-16 00:00:00');
+
+
+
 -- ==================== 2026-01-15 ====================
 INSERT INTO `reto2_g4`.`sesion` (`IDSesion`, `FecHoraIni`, `FecHoraFin`, `Precio`, `IDSala`, `IDPelicula`) VALUES ('S01-01', '2026-01-15 10:00:00', '2026-01-15 12:00:00', '6.00', 'S01', '1');
 INSERT INTO `reto2_g4`.`sesion` (`IDSesion`, `FecHoraIni`, `FecHoraFin`, `Precio`, `IDSala`, `IDPelicula`) VALUES ('S01-02', '2026-01-15 12:00:00', '2026-01-15 14:00:00', '6.00', 'S01', '1');
