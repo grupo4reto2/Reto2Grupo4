@@ -1,0 +1,58 @@
+-- MySQL dump 10.13  Distrib 8.0.43, for Win64 (x86_64)
+--
+-- Host: 10.5.6.136    Database: reto2_g4_true
+-- ------------------------------------------------------
+-- Server version	8.4.3
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `entrada`
+--
+
+DROP TABLE IF EXISTS `entrada`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `entrada` (
+  `IDEntrada` int unsigned NOT NULL AUTO_INCREMENT,
+  `NumPers` int unsigned NOT NULL,
+  `IDSesion` int unsigned NOT NULL,
+  `IDCompra` int unsigned NOT NULL,
+  `FecHoraIni` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`IDEntrada`),
+  KEY `fk_Entrada_Compra` (`IDCompra`),
+  KEY `fk_Entrada_Sesion` (`IDSesion`),
+  CONSTRAINT `fk_Entrada_Compra` FOREIGN KEY (`IDCompra`) REFERENCES `compra` (`IDCompra`) ON UPDATE CASCADE,
+  CONSTRAINT `fk_Entrada_Sesion` FOREIGN KEY (`IDSesion`) REFERENCES `sesion` (`IDSesion`) ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `entrada`
+--
+
+LOCK TABLES `entrada` WRITE;
+/*!40000 ALTER TABLE `entrada` DISABLE KEYS */;
+INSERT INTO `entrada` VALUES (1,100,1,1,'2026-01-15 09:00:00'),(2,100,1,2,'2026-01-15 11:00:00'),(3,15,2,3,'2026-01-15 13:00:00'),(4,20,3,4,'2026-01-15 15:00:00'),(5,100,1,1,'2026-01-15 17:00:00'),(6,30,3,2,'2026-01-15 19:00:00'),(7,12,2,3,'2026-01-15 21:00:00'),(8,100,1,4,'2026-01-15 23:00:00');
+/*!40000 ALTER TABLE `entrada` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2026-01-20 17:29:53
