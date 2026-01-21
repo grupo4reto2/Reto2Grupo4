@@ -6,17 +6,22 @@ public class Entrada {
 	private Sesion sesion;
 	private int numPersonas;
 	private Compra idCompra;
-	
-	public Entrada (int idEntrada, Sesion sesion, int numPersonas, Compra idCompra) {
+	private LocalDateTime fecHoraIni;
+	public Entrada (int idEntrada, Sesion sesion, int numPersonas, Compra idCompra, LocalDateTime fecHoraIn) {
 		this.idEntrada = idEntrada;
 		this.sesion = sesion;
 		this.numPersonas = numPersonas;
 		this.idCompra = idCompra;
+		this.fecHoraIni = fecHoraIni;
 	}
 
 	
+	public LocalDateTime getFecHoraIni() {
+		return FecHoraIni;
 
-	
+	public void setFecHoraIni(LocalDateTime getFecHoraIni) {
+		this.getFecHoraIni = getFecHoraIni;
+		
 	public int getIdEntrada() {
 		return idEntrada;
 	}
