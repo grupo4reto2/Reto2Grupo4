@@ -10,9 +10,15 @@ public class Sala {
 	private int aforo;
 	private List<Sesion>sesiones;
 
+<<<<<<< HEAD
 	public Sala (String nombre, String idSala, int aforo) {
 		this.nombre = nombre;
 		this.idSala = idSala;
+=======
+	public Sala (String idSala, String nombre, int aforo) {
+		this.idSala = idSala;
+		this.nombre = nombre;
+>>>>>>> 356c0af2a9002f4886ce81a2a86301de0d10891e
 		this.aforo = aforo;
 		this.sesiones = new ArrayList<>();
 	}
@@ -52,9 +58,16 @@ public class Sala {
 	
 	public String toString () {
 		
+<<<<<<< HEAD
 		return "ID Sala: " + idSala +
 				" Sala: " + nombre + 
 				" Aforo: " + aforo;
+=======
+		return "ID Sala: " + idSala.getIdSala() +
+				" Sala: " + nombre.getNombre() + 
+				" Aforo: " + aforo +
+				" Lista de Sesiones: " + sesiones.getSesiones() ;
+>>>>>>> 356c0af2a9002f4886ce81a2a86301de0d10891e
 	}
 	
 	
