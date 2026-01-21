@@ -60,17 +60,10 @@ public class Cliente {
 	@Override 
 	
 	public String toString() {
-<<<<<<< HEAD
 		return  "DNI: " + dni + "\n" +
 				" Cliente: " + nombre + " " + apellido + "\n" +
-				" Correo electrónico: " + correo + "\n" +
+				" Correo electrónico: " + correo+ "\n" +
 				" Contrasena: " + contraseña;
-=======
-		return  "DNI: " + dni.getDni() + "\n" +
-				" Cliente: " + nombre.getNombre() + " " + apellido.getApellido() + "\n" +
-				" Correo electrónico: " + correo.getCorreo() + "\n" +
-				" Contrasena: " + contraseña.getContraseña();
->>>>>>> 356c0af2a9002f4886ce81a2a86301de0d10891e
 	}
 	
 }

@@ -5,20 +5,14 @@ import java.util.ArrayList;
 
 public class Sala {
 
-	private String idSala;
+	private int idSala;
 	private String nombre;
 	private int aforo;
 	private List<Sesion>sesiones;
 
-<<<<<<< HEAD
-	public Sala (String nombre, String idSala, int aforo) {
-		this.nombre = nombre;
-		this.idSala = idSala;
-=======
-	public Sala (String idSala, String nombre, int aforo) {
+	public Sala (int idSala, String nombre, int aforo) {
 		this.idSala = idSala;
 		this.nombre = nombre;
->>>>>>> 356c0af2a9002f4886ce81a2a86301de0d10891e
 		this.aforo = aforo;
 		this.sesiones = new ArrayList<>();
 	}
@@ -31,11 +25,11 @@ public class Sala {
 		this.nombre = nombre;
 	}
 
-	public String getIdSala() {
+	public int getIdSala() {
 		return idSala;
 	}
 
-	public void setIdSala(String idSala) {
+	public void setIdSala(int idSala) {
 		this.idSala = idSala;
 	}
 
@@ -58,16 +52,10 @@ public class Sala {
 	
 	public String toString () {
 		
-<<<<<<< HEAD
 		return "ID Sala: " + idSala +
 				" Sala: " + nombre + 
-				" Aforo: " + aforo;
-=======
-		return "ID Sala: " + idSala.getIdSala() +
-				" Sala: " + nombre.getNombre() + 
 				" Aforo: " + aforo +
-				" Lista de Sesiones: " + sesiones.getSesiones() ;
->>>>>>> 356c0af2a9002f4886ce81a2a86301de0d10891e
+				" Lista de Sesiones: " + sesiones ;
 	}
 	
 	

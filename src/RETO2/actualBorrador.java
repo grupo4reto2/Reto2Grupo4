@@ -19,7 +19,8 @@ import java.util.Comparator;
 
 public class actualBorrador {
 	
-	public static void geTConexxionn (){
+	public static void getConn (){
+		
 		
 		Connection conexxion  = conexion.geTConnexxionn();
 		
@@ -132,7 +133,13 @@ public class actualBorrador {
 		
 		Scanner teclado = new Scanner(System.in);
 		
-		geTConexxionn();
+		String url = "jdbc:mysql://10.5.6.136:3309/reto2_g4_true";
+		String user = "ander";
+		String pass = "Elorrieta00-";
+		
+		String sqlPelicula = "Select * from pelicula";
+		
+		getConn();
 		
 		mensajeBienvenida();
 		teclado.nextLine();
@@ -183,7 +190,7 @@ public class actualBorrador {
 	
 				
 		
-		//SESIONESSSS
+		//SESIONES
 		
 		ArrayList<Sesion> sesiones = new ArrayList<>();
 		
@@ -202,7 +209,7 @@ public class actualBorrador {
 				sesiones.add(new Sesion (
 						
 						String.format("S%02d-%02d" , p + 1, s), 
-						LocalDateTime.of(2026,2,1,10,0,0).plusHours(2 * (s - 1)).plusDays(p),
+						LocalDateTime.of(2026,1,15,10,00,00).plusHours(2 * (s - 1)).plusDays(p),
 						LocalDateTime.of(2026,2,1,12,0,0).plusHours(2 * (s - 1)),
 						salas.get(p),
 						precio,
@@ -251,7 +258,6 @@ public class actualBorrador {
 		
 		
 		}
-		
 		
 		
 		//SELECCIÓN DE FECHAS

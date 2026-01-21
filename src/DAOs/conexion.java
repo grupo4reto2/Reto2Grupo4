@@ -10,11 +10,7 @@ import java.sql.SQLException;
 public class conexion {
 
 	
-<<<<<<< HEAD
-	private static String BBDD = "reto2_g4";
-=======
 	private static String BBDD = "reto2_g4_true";
->>>>>>> 356c0af2a9002f4886ce81a2a86301de0d10891e
 	private static String login = "jhon";
 	private static String passwd = "Elorrieta00-";
 	private static String url = "jdbc:mysql://10.5.6.136:3309/" + BBDD;
@@ -23,11 +19,6 @@ public class conexion {
 	
 	private static Connection conexion;
 	
-<<<<<<< HEAD
-	
-	
-=======
->>>>>>> 356c0af2a9002f4886ce81a2a86301de0d10891e
 	  public static Connection geTConnexxionn() {
 		  
 	        if (conexion == null) {
@@ -54,12 +45,7 @@ public class conexion {
 	       
 	        }
 	      
-<<<<<<< HEAD
-	        
-	        
-=======
 	         
->>>>>>> 356c0af2a9002f4886ce81a2a86301de0d10891e
 	        return conexion;
 	    }
 
