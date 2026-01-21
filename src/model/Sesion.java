@@ -2,15 +2,17 @@ package model;
 import java.time.LocalDateTime;
 public class Sesion {
 
-	private String idSesion;
+	private int idSesion;
+	private String codSesion;
 	private LocalDateTime fechaInicio;
 	private LocalDateTime fechaFin;
 	private Sala sala;
 	private double precio;
 	private String nomPelicula;
 	
-	public Sesion (String idSesion, LocalDateTime fechaInicio, LocalDateTime fechaFin, Sala sala, double precio, String nomPelicula) {
+	public Sesion (int idSesion, String codSesion, LocalDateTime fechaInicio, LocalDateTime fechaFin, Sala sala, double precio, String nomPelicula) {
 		this.idSesion = idSesion;
+		this.codSesion = codSesion;
 		this.fechaInicio = fechaInicio;
 		this.fechaFin = fechaFin;
 		this.sala = sala;
@@ -28,12 +30,20 @@ public class Sesion {
 		this.nomPelicula= nomPelicula;
 	}
 
-	public String getIdSesion() {
+	public int getIdSesion() {
 		return idSesion;
 	}
 
-	public void setIdSesion(String idSesion) {
+	public void setIdSesion(int idSesion) {
 		this.idSesion = idSesion;
+	}
+
+	public String getCodSesion() {
+		return codSesion;
+	}
+
+	public void setCodSesion(String codSesion) {
+		this.codSesion = codSesion;
 	}
 
 	public LocalDateTime getFechaInicio() {
@@ -68,17 +78,16 @@ public class Sesion {
 		this.precio = precio;
 	}
 
-
-	
 	@Override
 	
 	public String toString() {
 		return  "Sesion ID :" + idSesion +
-				" Inicio: " + fechaInicio +
-				" Fin: " + fechaFin +
+				"Codigo Sesion:" + codSesion.getCodSesion()+
+				" Inicio: " + fechaInicio.getFechaInicio() +
+				" Fin: " + fechaFin.getFechaFin() +
 				" Sala: " + sala.getNombre() + 
 				" Precio: " + precio +
-				" Película: " + nomPelicula;
+				" Película: " + nomPelicula.getNomPelicula();
 	}
 	
 }
