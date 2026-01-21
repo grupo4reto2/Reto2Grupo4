@@ -4,19 +4,20 @@ public class Sesion {
 
 	private int idSesion;
 	private String codSesion;
-	private LocalDateTime fechaInicio;
-	private LocalDateTime fechaFin;
-	private Sala sala;
+	private LocalDateTime fecHoraIni;
+	private LocalDateTime fecHoraFin;
 	private double precio;
+	private Sala idSala;
+	private Pelicula idPelicula;
 	private String nomPelicula;
 	
-	public Sesion (int idSesion, String codSesion, LocalDateTime fechaInicio, LocalDateTime fechaFin, Sala sala, double precio, String nomPelicula) {
+	public Sesion (int idSesion, String codSesion, LocalDateTime fecHoraIni, LocalDateTime fecHoraFin,  double precio, Sala idSala, Pelicula idPelicula, String nomPelicula) {
 		this.idSesion = idSesion;
 		this.codSesion = codSesion;
-		this.fechaInicio = fechaInicio;
-		this.fechaFin = fechaFin;
-		this.sala = sala;
+		this.fecHoraIni = fecHoraIni;
+		this.fecHoraFin = fecHoraFin;
 		this.precio = precio;
+		this.idSala = idSala;
 		this.nomPelicula = nomPelicula;
 		
 		}
@@ -46,28 +47,28 @@ public class Sesion {
 		this.codSesion = codSesion;
 	}
 
-	public LocalDateTime getFechaInicio() {
-		return fechaInicio;
+	public LocalDateTime getfecHoraIni() {
+		return fecHoraIni;
 	}
 
-	public void setFechaInicio(LocalDateTime fechaInicio) {
-		this.fechaInicio = fechaInicio;
+	public void setfecHoraIni(LocalDateTime fecHoraIni) {
+		this.fecHoraIni = fecHoraIni;
 	}
 
-	public LocalDateTime getFechaFin() {
-		return fechaFin;
+	public LocalDateTime getfecHoraFin() {
+		return fecHoraFin;
 	}
 
-	public void setFechaFin(LocalDateTime fechaFin) {
-		this.fechaFin = fechaFin;
+	public void setfecHoraFin(LocalDateTime fecHoraFin) {
+		this.fecHoraFin = fecHoraFin;
 	}
 
-	public Sala getSala() {
-		return sala;
+	public Sala getidSala() {
+		return idSala;
 	}
 
-	public void setSala(Sala sala) {
-		this.sala = sala;
+	public void setidSala(Sala idSala) {
+		this.idSala = idSala;
 	}
 
 	public double getPrecio() {
@@ -78,14 +79,20 @@ public class Sesion {
 		this.precio = precio;
 	}
 
+	public Pelicula getidPelicula() {
+		return idPelicula;
+
+	public void setidPelicula(Pelicula idPelicula) {
+		this.idPelicula = idPelicula;
+	
 	@Override
 	
 	public String toString() {
 		return  "Sesion ID :" + idSesion +
 				"Codigo Sesion:" + codSesion.getCodSesion()+
-				" Inicio: " + fechaInicio.getFechaInicio() +
-				" Fin: " + fechaFin.getFechaFin() +
-				" Sala: " + sala.getNombre() + 
+				" Inicio: " + fecHoraIni.getfecHoraIni() +
+				" Fin: " + fecHoraFin.getfecHoraFin() +
+				" Sala: " + idSala.getNombre() + 
 				" Precio: " + precio +
 				" Película: " + nomPelicula.getNomPelicula();
 	}
