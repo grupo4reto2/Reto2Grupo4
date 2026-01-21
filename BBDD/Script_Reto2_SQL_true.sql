@@ -119,6 +119,10 @@ CREATE TABLE `pelicula` (
   CONSTRAINT `FK_Pelicula_Genero` FOREIGN KEY (`IDGenero`) REFERENCES `genero` (`IDGenero`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+ALTER TABLE `reto2_g4_true`.`pelicula` 
+ADD COLUMN `DesPelicula` VARCHAR(255) NOT NULL AFTER `IDGenero`;
+
+
 /*Insert*/
 insert into Pelicula (IDPelicula, NomPelicula, Duracion, IDGenero, Portada)
 values
@@ -130,6 +134,13 @@ values
 ' ),
 (5,'¡Aterriza como puedas!' , 92, 4, 'https://imgs.search.brave.com/1fyE5g2uMLQXGifPBcEBod79aHjSjz-KlDjWQjLJ3vk/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL00v/TVY1Qll6Y3labVl6/WldNdE1qUmlNeTAw/WXpsakxUazFObUl0/TjJFM016bGhObVUz/TlRjelhrRXlYa0Zx/Y0djQC5qcGc
 ');
+
+UPDATE `reto2_g4_true`.`pelicula` SET `DesPelicula` = 'Simba es un pequeño y travieso león, hijo del rey de la selva, Mufasa. Cierto día, junto con su amiga Nala se adentran en el territorio de las hienas y tienen que ser salvados por su padre. Esto le da una idea a Scar, el tío de Simba, que quiere ser el rey, pero sabe que Simba es quien está llamado a ser el siguiente rey de la selva. Scar traza junto a las hienas un plan para matar a padre e hijo y que parezca un accidente, para así instaurar un reinado de terror en la manada. Sin embargo su plan no le sale como había previsto y Simba sale con vida. Scar no le mata pero le obliga a huir. Desterrado, solo y abatido, Simba se encuentra con Timón y Pumba, un jabalí y un suricato que le harán ver las cosas de otra manera.' WHERE (`IDPelicula` = '1');
+UPDATE `reto2_g4_true`.`pelicula` SET `DesPelicula` = 'Tres jóvenes planifican a la perfección cada robo que realizan en los chalet que asaltan. Ahora han encontrado el objetivo perfecto: la vivienda de un multimillonario ciego que podría sacarles de la delincuencia para siempre. Cuando entran, atacan al inquilino. Pero, tan pronto como intentan huir de la casa, los roles se cambian y los adolescentes se encuentran luchando por su supervivencia contra un peligroso psicópata.' WHERE (`IDPelicula` = '2');
+UPDATE `reto2_g4_true`.`pelicula` SET `DesPelicula` = 'Se presenta el conflicto bélico de 1916 de trincheras entre franceses y alemanes, donde se nos muestra la decadente presencia de las unidades, temerosas y desorganizadas en un enfrentamiento que ni avanzaba ni retrocedía. El General George Broulard (Adolphe Menjou), tentado por una oferta del General Miró, ambos firmes exaltadores de la patria francesa, ordenan al Coronel Dax (Kirk Douglas) a llevar a cabo una ofensiva para tomar la “Colina de las Hormigas”, punto estratégico de la artillería alemana. Aunque Dax considera el ataque un suicidio, obedece las órdenes. La Brigada 119 se desordena ante el ataque inminente alemán, provocando la retirada y la insubordinación. Ante el hecho de cobardía, el General Broulard convoca un consejo de guerra para condenar a unos soldados de dicha Brigada, escogidos al azar, como represalia a la unidad por su traición.' WHERE (`IDPelicula` = '3');
+UPDATE `reto2_g4_true`.`pelicula` SET `DesPelicula` = 'Dos niños de ocho años de Colorado encuentran un coche policial aparentemente abandonado y con las llaves en el contacto, así que deciden aprender a conducirlo. Las pistolas y el cordón policial son juguetes para Travis y Harrison hasta que un policía corrupto reclama el vehículo, en el que había transportado un cadáver. Así comienza la macabra persecución en la que los dos jóvenes tratarán de huir.' WHERE (`IDPelicula` = '4');
+UPDATE `reto2_g4_true`.`pelicula` SET `DesPelicula` = 'A causa de una comida en mal estado, los pilotos de un avión comercial quedan fuera de combate. Con la nave a la deriva, solo Ted Striker, un antiguo as de la aviación que dejó de volar a causa de una depresión, tiene alguna posibilidad de poder hacerla aterrizar.' WHERE (`IDPelicula` = '5');
+
 -- =========================
 -- SALA
 -- =========================
