@@ -18,6 +18,7 @@ public class Sesion {
 		this.fecHoraFin = fecHoraFin;
 		this.precio = precio;
 		this.idSala = idSala;
+		this.idPelicula = idPelicula;
 		this.nomPelicula = nomPelicula;
 		
 		}
@@ -94,7 +95,7 @@ public class Sesion {
 				" Fin: " + fecHoraFin.getfecHoraFin() +
 				" Sala: " + idSala.getNombre() + 
 				" Precio: " + precio +
-				" Película: " + nomPelicula.getNomPelicula();
+				" Película: " + nomPelicula.getNomPelicula() + idPelicula.getIdPelicula();
 	}
 	
 }
