@@ -8,12 +8,12 @@ public class Pelicula {
 	private int idGenero;
 	private String nomGenero;
 	
-	public Pelicula (int idPelicula, int duracion, int idGenero, String nomPelicula,  String nomGenero) {
+	public Pelicula (int idPelicula, String nomPelicula, int duracion, int idGenero, String nomGenero) {
 		this.idPelicula = idPelicula;
+		this.nomPelicula = nomPelicula;
 		this.duracion = duracion;
 		this.idGenero = idGenero;
-		this.nomPelicula = nomPelicula;
-		this.nomGenero = nomGenero;  
+		this.nomGenero = nomGenero;
 	}
 
 	public String getNomGenero() {
