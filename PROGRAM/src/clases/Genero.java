@@ -8,7 +8,6 @@ public class Genero {
 
 	private String nomGenero;
 
-	
 
 	public Genero (int idGenero, String nomGenero) {
 
@@ -16,19 +15,13 @@ public class Genero {
 
 		this.nomGenero = nomGenero;
 
-		
-
 	}
-
-
-
+	
 	public int getIdGenero() {
 
 		return idGenero;
 
 	}
-
-
 
 	public void setIdGenero(int idGenero) {
 

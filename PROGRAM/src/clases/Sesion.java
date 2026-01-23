@@ -9,9 +9,9 @@ public class Sesion {
 	private double precio;
 	private Sala idSala;
 	private Pelicula idPelicula;
-	private String nomPelicula;
+	private Pelicula nomPelicula;
 	
-	public Sesion (int idSesion, String codSesion, LocalDateTime fecHoraIni, LocalDateTime fecHoraFin,  double precio, Sala idSala, Pelicula idPelicula, String nomPelicula) {
+	public Sesion (int idSesion, String codSesion, LocalDateTime fecHoraIni, LocalDateTime fecHoraFin,  double precio, Sala idSala, Pelicula idPelicula, Pelicula nomPelicula) {
 		this.idSesion = idSesion;
 		this.codSesion = codSesion;
 		this.fecHoraIni = fecHoraIni;
@@ -24,11 +24,11 @@ public class Sesion {
 		}
 
 	
-	public String getNomPelicula() {
+	public Pelicula getNomPelicula() {
 		return nomPelicula;
 	}
 
-	public void setNomPelicula(String nomPelicula) {
+	public void setNomPelicula(Pelicula nomPelicula) {
 		this.nomPelicula= nomPelicula;
 	}
 

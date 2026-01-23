@@ -4,27 +4,18 @@ public class Pelicula {
 	private int idPelicula;
 	private String nomPelicula;
 	private int duracion;
-	private int idGenero;
-	private String nomGenero;
+	private Genero idGenero;
 	private String Portada;
 	
 
-	public Pelicula (int idPelicula, String nomPelicula, int duracion, int idGenero, String nomGenero, String Portada) {
+	public Pelicula (int idPelicula, String nomPelicula, int duracion, Genero idGenero, String Portada) {
 		this.idPelicula = idPelicula;
 		this.nomPelicula = nomPelicula;
 		this.duracion = duracion;
 		this.idGenero = idGenero;
-		this.nomGenero = nomGenero;
 		this.Portada = Portada;
 	}
 
-	public String getNomGenero() {
-		return nomGenero;
-	}
-
-	public void getNomGenero(String nomGenero) {
-		this.nomGenero = nomGenero;
-	}
 	
 	public String getNomPelicula() {
 		return nomPelicula;
@@ -50,11 +41,11 @@ public class Pelicula {
 		this.duracion = duracion;
 	}
 
-	public int getidGenero() {
+	public Genero getidGenero() {
 		return idGenero;
 	}
 
-	public void setidGenero(int idGenero) {
+	public void setidGenero(Genero idGenero) {
 		this.idGenero = idGenero;
 	}
 
@@ -69,8 +60,7 @@ public class Pelicula {
 	@Override
 	public String toString() {
 		return "Pelicula [idPelicula=" + idPelicula + ",nomPelicula=" + nomPelicula + ", duracion=" + duracion
-				+ ", idGenero=" + idGenero + ", nomGenero=" + nomGenero + ", getNomGenero()=" + getNomGenero()
-				+ ", getNomPelicula()=" + getNomPelicula() +  ", getIdPelicula()=" + getIdPelicula() + ", getDuracion()=" + getDuracion()
+				+ ", idGenero=" + idGenero  +    ", getNomPelicula()=" + getNomPelicula() +  ", getIdPelicula()=" + getIdPelicula() + ", getDuracion()=" + getDuracion()
 				+ ",getPortada()=" + getPortada() + ", getidGenero()=" + getidGenero() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
 				+ ", toString()=" + super.toString() + "]";
 	}

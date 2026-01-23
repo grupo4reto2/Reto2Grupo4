@@ -1,10 +1,17 @@
-package clases;
+package DAO_POJO;
+
+import clases.*;
+import DAO_POJO.*;
+import utils.conexion;
+import utils.conexion;
 
 import java.sql.*;
 
 import java.util.ArrayList;
 
 import java.util.List;
+
+import clases.Entrada;
 public class EntradaDAO {
 
 
@@ -18,7 +25,7 @@ public class EntradaDAO {
 
 		    String consulta1 = "SELECT IDEntrada,Cantidad, IDSesion, IDCompra, FecHoraIni FROM Entrada";
 
-		    try (Connection conn = Conexion.getConnection();
+		    try (Connection conn = conexion.getConnection();
 		         PreparedStatement sentencia = conn.prepareStatement(consulta1);
 		         ResultSet rs = sentencia.executeQuery()) {
 

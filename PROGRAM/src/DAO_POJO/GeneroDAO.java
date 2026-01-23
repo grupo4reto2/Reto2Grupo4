@@ -1,10 +1,19 @@
-package clases;
+package DAO_POJO;
+
+
+import clases.*;
+import DAO_POJO.*;
+import utils.conexion;
+import utils.conexion;
+
 
 import java.sql.*;
 
 import java.util.ArrayList;
 
 import java.util.List;
+
+import clases.Genero;
 public class GeneroDAO {
 
 
@@ -18,7 +27,7 @@ public class GeneroDAO {
 
 		    String consulta1 = "SELECT IDGenero,NomGenero FROM Genero";
 
-		    try (Connection conn = Conexion.getConnection();
+		    try (Connection conn = conexion.getConnection();
 		         PreparedStatement sentencia = conn.prepareStatement(consulta1);
 		         ResultSet rs = sentencia.executeQuery()) {
 

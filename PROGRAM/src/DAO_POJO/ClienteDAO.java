@@ -1,5 +1,9 @@
-package clases;
+package DAO_POJO;
 
+import clases.*;
+import DAO_POJO.*;
+import utils.conexion;
+import utils.conexion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,7 +16,7 @@ public class ClienteDAO {
 
         String consulta1 = "select * from Cliente";
 
-        try (Connection conn = Conexion.getConnection();
+        try (Connection conn = conexion.getConnection();
 		         PreparedStatement sentencia1 = conn.prepareStatement(consulta1);
 		         ResultSet resultado1 = sentencia1.executeQuery()) {
 

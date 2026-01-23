@@ -62,7 +62,7 @@ LIMIT 1;
 
 /*Datos de los clientes que han gastado más dinero.*/
 
-SELECT C.DNICliente, C.Nombre, C.Apellido, max(CO.Importe) DineroGastado
+SELECT C.DNICliente, C.Nombre, C.Apellido, C.Correo, max(CO.Importe) DineroGastado
 FROM Cliente C JOIN Compra CO ON C.DNICliente = CO.DNICliente
 GROUP BY C.DNICliente, C.Nombre, C.Apellido, C.Correo
 ORDER BY DineroGastado DESC

@@ -1,10 +1,15 @@
-package clases;
+package DAO_POJO;
 
 import java.sql.*;
-
+import clases.*;
+import DAO_POJO.*;
+import utils.conexion;
+import utils.conexion;
 import java.util.ArrayList;
 
 import java.util.List;
+
+import clases.Compra;
 public class CompraDAO {
 
 
@@ -18,7 +23,7 @@ public class CompraDAO {
 
 		    String consulta1 = "SELECT IDCompra,Fecha, DNICliente, descuento, Importe FROM Compra";
 
-		    try (Connection conn = Conexion.getConnection();
+		    try (Connection conn = conexion.getConnection();
 		         PreparedStatement sentencia = conn.prepareStatement(consulta1);
 		         ResultSet rs = sentencia.executeQuery()) {
 

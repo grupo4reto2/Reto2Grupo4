@@ -1,4 +1,8 @@
-package clases;
+package main;
+
+import clases.*;
+import DAO_POJO.*;
+import utils.conexion;
 
 public class AplicacionPrueba {
 

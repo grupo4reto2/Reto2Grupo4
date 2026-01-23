@@ -48,15 +48,15 @@ public class Sala {
 	public void setSesiones(List<Sesion> sesiones) {
 		this.sesiones = sesiones;
 	}
-	
+		
 	
 	public String toString () {
 		
 		return "ID Sala: " + idSala +
 				" Sala: " + nombre + 
-				" Aforo: " + aforo +
+				" Aforo: " + aforo+
 				" Lista de Sesiones: " + sesiones ;
-	}
+		}
 	
 	
 }

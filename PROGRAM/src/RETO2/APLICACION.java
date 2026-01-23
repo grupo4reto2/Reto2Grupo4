@@ -1,9 +1,9 @@
 package RETO2;
 import java.util.Scanner;
 
-import clases.Sala;
-import clases.Sesion;
-
+import clases.*;
+import DAO_POJO.*;
+import utils.conexion;
 import java.util.List;
 import java.util.ArrayList;
 import java.time.LocalDateTime;

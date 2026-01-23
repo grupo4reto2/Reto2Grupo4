@@ -1,10 +1,19 @@
-package clases;
+package DAO_POJO;
+
+
+import clases.*;
+import DAO_POJO.*;
+import utils.conexion;
+import utils.conexion;
+
 
 import java.sql.*;
 
 import java.util.ArrayList;
 
 import java.util.List;
+
+import clases.Pelicula;
 
 public class PeliculaDAO {
 
@@ -16,7 +25,7 @@ public class PeliculaDAO {
 
 	    String consulta1 = "SELECT IDPelicula, NomPelicula, Portada FROM Pelicula";
 
-	    try (Connection conn = Conexion.getConnection();
+	    try (Connection conn = conexion.getConnection();
 	         PreparedStatement sentencia = conn.prepareStatement(consulta1);
 	         ResultSet rs = sentencia.executeQuery()) {
 
