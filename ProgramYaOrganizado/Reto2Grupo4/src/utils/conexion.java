@@ -1,8 +1,11 @@
-package clases;
+package utils;
 
 import java.sql.*;
+import clases.*;
+import DAO_POJO.*;
 
-public class Conexion {
+
+public class conexion {
 
 
 
@@ -14,7 +17,7 @@ public class Conexion {
 
 
 
-	private Conexion() {}
+	private conexion() {}
 
 	
 
