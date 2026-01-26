@@ -8,28 +8,26 @@ public class Sesion {
 	private LocalDateTime fecHoraFin;
 	private double precio;
 	private Sala idSala;
-	private Pelicula idPelicula;
-	private Pelicula nomPelicula;
+	private Pelicula pelicula;
 	
-	public Sesion (int idSesion, String codSesion, LocalDateTime fecHoraIni, LocalDateTime fecHoraFin,  double precio, Sala idSala, Pelicula idPelicula, Pelicula nomPelicula) {
+	public Sesion (int idSesion, String codSesion, LocalDateTime fecHoraIni, LocalDateTime fecHoraFin,  double precio, Sala idSala, Pelicula pelicula) {
 		this.idSesion = idSesion;
 		this.codSesion = codSesion;
 		this.fecHoraIni = fecHoraIni;
 		this.fecHoraFin = fecHoraFin;
 		this.precio = precio;
 		this.idSala = idSala;
-		this.idPelicula = idPelicula;
-		this.nomPelicula = nomPelicula;
-		
+		this.pelicula = pelicula;
+
 		}
 
 	
-	public Pelicula getNomPelicula() {
-		return nomPelicula;
+	public Pelicula getPelicula() {
+		return pelicula;
 	}
 
-	public void setNomPelicula(Pelicula nomPelicula) {
-		this.nomPelicula= nomPelicula;
+	public void setPelicula(Pelicula pelicula) {
+		this.pelicula= pelicula;
 	}
 
 	public int getIdSesion() {
@@ -80,13 +78,6 @@ public class Sesion {
 		this.precio = precio;
 	}
 
-	public Pelicula getidPelicula() {
-		return idPelicula;
-	}
-
-	public void setidPelicula(Pelicula idPelicula) {
-		this.idPelicula = idPelicula;
-	}	
 	
 	
 	@Override
@@ -98,7 +89,7 @@ public class Sesion {
 				" Fin: " + fecHoraFin +
 				" Sala: " + idSala.getNombre() + 
 				" Precio: " + precio +
-				" Película: " + nomPelicula + idPelicula.getIdPelicula();
+				" Película: " +  pelicula.getIdPelicula();
 	}
 	
 }

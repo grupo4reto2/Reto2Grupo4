@@ -57,13 +57,7 @@ public class Pelicula {
 		this.Portada = Portada;
 	}
 	
-	@Override
-	public String toString() {
-		return "Pelicula [idPelicula=" + idPelicula + ",nomPelicula=" + nomPelicula + ", duracion=" + duracion
-				+ ", idGenero=" + idGenero  +    ", getNomPelicula()=" + getNomPelicula() +  ", getIdPelicula()=" + getIdPelicula() + ", getDuracion()=" + getDuracion()
-				+ ",getPortada()=" + getPortada() + ", getidGenero()=" + getidGenero() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
-				+ ", toString()=" + super.toString() + "]";
-	}
+	
 	
 	
 	

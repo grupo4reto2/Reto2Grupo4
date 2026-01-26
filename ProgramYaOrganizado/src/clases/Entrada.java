@@ -7,14 +7,14 @@ public class Entrada {
 
 	private int idEntrada;
 	private int cantidad;
-	private Sesion idSesion;
+	private Sesion sesion;
 	private Compra idCompra;
 	private LocalDateTime fecHoraIni;
 	
-	public Entrada (int idEntrada, int cantidad, Sesion idSesion, Compra idCompra, LocalDateTime fecHoraIni) {
+	public Entrada (int idEntrada, int cantidad, Sesion sesion, Compra idCompra, LocalDateTime fecHoraIni) {
 		this.idEntrada = idEntrada;
 		this.cantidad = cantidad;
-		this.idSesion = idSesion;
+		this.sesion = sesion;
 		this.idCompra = idCompra;
 		this.fecHoraIni = fecHoraIni;
 	}
@@ -30,20 +30,17 @@ public class Entrada {
 		return idEntrada;
 	}
 
-
-
-
 	public void setIdEntrada(int idEntrada) {
 		this.idEntrada = idEntrada;
 	}
 
 
-	public Sesion getIdSesion() {
-		return idSesion;
+	public Sesion getSesion() {
+		return sesion;
 	}
 
-	public void setIdSesion(Sesion idSesion) {
-		this.idSesion = idSesion;
+	public void setSesion(Sesion sesion) {
+		this.sesion = sesion;
 	}
 
 	public int getcantidad() {
@@ -71,7 +68,7 @@ public class Entrada {
 		
 		return "ID entrada: " + idEntrada +
 				" Número de personas: " + cantidad + 
-			    " Sesión: " + idSesion.getIdSesion() +
+			    " Sesión: " + sesion.getIdSesion() +
 				" ID de Compra: " + idCompra.getIdCompra() +
 				" Fecha de compra: " + fecHoraIni;
 			 
