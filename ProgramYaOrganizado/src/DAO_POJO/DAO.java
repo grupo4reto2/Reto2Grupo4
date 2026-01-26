@@ -1,10 +1,9 @@
-package main;
+package DAO_POJO;
 
 import clases.*;
-import DAO_POJO.*;
 import utils.conexion;
 
-public class AplicacionPrueba {
+public class DAO {
 
     public static void main(String[] args) {
 
