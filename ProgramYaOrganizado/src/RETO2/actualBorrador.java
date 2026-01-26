@@ -66,97 +66,81 @@ public class actualBorrador {
         ArrayList<Sesion> sesiones = new ArrayList<>();
         int idSesion = 1;
 
-        for (int d = 0 ; d < 7; d++) {
-        for (int p = 0; p < 4; p++) {
-            for (int s = 1; s <= 8; s++) {
-                double precio;
-                if (s <= 3) precio = 6;
-                else if (s <= 6) precio = 9.50;
-                else precio = 12;
+        // Recorremos cada día (7 días)
+        for (int d = 0; d < 7; d++) {
+            LocalDateTime inicioBase = LocalDateTime.of(2026, 2, 1, 10, 0).plusDays(d);
+            LocalDateTime finBase    = LocalDateTime.of(2026, 2, 1, 12, 0).plusDays(d);
 
-                sesiones.add(new Sesion(
-                        idSesion++,
-                        String.format("S%02d-%02d", p + 1, s),
-                        LocalDateTime.of(2026, 1, 15, 10, 0).plusHours(2 * (s - 1)).plusDays(p),
-                        LocalDateTime.of(2026, 1, 15, 12, 0).plusHours(2 * (s - 1)).plusDays(p),
-                        precio,
-                        salas.get(p),
-                        peliculas.get(p)
-                ));
+            // Recorremos cada película
+            for (int p = 0; p < peliculas.size(); p++) {
 
-                
+                // Elegimos sala de forma circular si hay más películas que salas
+                Sala sala = salas.get(p % salas.size());
+
+                // Creamos 8 sesiones por película
+                for (int s = 0; s < 8; s++) {
+                    double precio;
+                    if (s <= 2) precio = 6;
+                    else if (s <= 5) precio = 9.50;
+                    else precio = 12;
+
+                    Sesion sesion = new Sesion(
+                            idSesion++,
+                            String.format("S%02d-%02d", p + 1, s + 1),
+                            inicioBase.plusHours(2 * s),
+                            finBase.plusHours(2 * s),
+                            precio,
+                            sala,
+                            peliculas.get(p)
+                    );
+
+                    sesiones.add(sesion);
+                    sala.getSesiones().add(sesion);
+                }
             }
         }
 
-     }
         // Ordenar sesiones por fecha de inicio
         Collections.sort(sesiones, Comparator.comparing(Sesion::getfecHoraIni));
         return sesiones;
     }
     
-    private static void mostrarSesiones (ArrayList<Sesion> sesiones, Pelicula nombrePelicula, LocalDateTime fechaElegida) {
+    private static void mostrarSesiones(ArrayList<Sesion> sesiones, Pelicula peliculaElegida, LocalDateTime fechaElegida) {
 
-    	
+        String[] numSesiones = {
+            "Primera ", "Segunda ", "Tercera ", "Cuarta ",
+            "Quinta ", "Sexta ", "Séptima ", "Octava "
+        };
 
-    	String [] numSesiones = {
+        int contador = 0;    
+        DateTimeFormatter fechaF = DateTimeFormatter.ofPattern("dd MMMM yyyy", new Locale("es"));
 
-    	"Primera ", "Segunda ", "Tercera ", "Cuarta ",
+        System.out.println("\nSeleccionada: " + peliculaElegida.getNomPelicula());
+        System.out.println("\nHorarios: " + fechaElegida.format(fechaF) + " (" + peliculaElegida.getNomPelicula() + ")\n");
 
-    	"Quinta ",	"Sexta ", "Séptima ", "Octava "
+        for (Sesion s : sesiones) {
+            LocalDateTime f = s.getfecHoraIni();
 
-    	};
+            // Comparamos objetos Pelicula y misma fecha
+            if (s.getPelicula().equals(peliculaElegida) &&
+                f.toLocalDate().equals(fechaElegida.toLocalDate())) {
 
-    	
+                System.out.println(
+                    numSesiones[contador] + "sesión : " +
+                    f.toLocalTime() + " - " +
+                    s.getPelicula().getNomPelicula() + " (" +
+                    s.getidSala().getNombre() + ") - " +
+                    s.getPrecio() + "€\n"
+                );
 
-    	int contador = 0;	
+                contador++;
+            }
+        }
 
-    	DateTimeFormatter fechaF = DateTimeFormatter.ofPattern("dd MMMM yyyy" , new Locale ("es"));
-
-    	System.out.println("\nSeleccionada: " + nombrePelicula.getNomPelicula() );
-
-    	System.out.println("\nHorarios: " + fechaElegida.format(fechaF) + " (" + nombrePelicula.getNomPelicula() + ")\n ");
-
-    	
-
-    	for (int i= 0; i < sesiones.size(); i++) {
-
-    	LocalDateTime f = sesiones.get(i).getfecHoraIni();
-
-    	if(sesiones.get(i).getPelicula().equals(nombrePelicula.getNomPelicula())) {
-
-    	if ((f.toLocalDate().equals(fechaElegida.toLocalDate()) && f.getHour() >= 10) ||
-
-    	(f.toLocalDate().equals(fechaElegida.toLocalDate().plusDays(1)) && f.getHour() == 0)) {	
-
-    	System.out.println(	
-
-    	
-
-    	numSesiones[contador] + "sesión : " +
-
-    	sesiones.get(i).getfecHoraIni().toLocalTime() +
-
-    	" - " + nombrePelicula +
-
-    	" (" + sesiones.get(i).getidSala().getNombre() + ")" +
-
-    	" - " + sesiones.get(i).getPrecio() + "€\n"
-
-    	
-
-    	);	
-
-    	contador++;
-
-    	}
-
-    	
-
-    	}
-
-    	}	
-
-    	}	
+        if (contador == 0) {
+            System.out.println("No hay sesiones disponibles para esta película en esta fecha.");
+        }
+    }
 
     private static ArrayList<LocalDateTime> cargarFechas() {
         ArrayList<LocalDateTime> fechas = new ArrayList<>();
@@ -203,7 +187,7 @@ public class actualBorrador {
 			System.out.println(
 		
 
-					"\n\nPelícula seleccionada: " + c.getSesion().getPelicula() +
+					"\n\nPelícula seleccionada: " + c.getSesion().getPelicula().getNomPelicula() +
 
 					"\nFecha y Hora: " + c.getSesion().getfecHoraIni().format(fechaF) +
 
@@ -486,7 +470,7 @@ public class actualBorrador {
 		System.out.printf("\n PRECIO FINAL : %.2f €\n", precioFinal);
 
 		
-
+teclado.close();
 		}
 
 		}
