@@ -32,7 +32,7 @@ public class actualBorrador {
         System.out.println("_______________________________ ");
         System.out.println(negrita + "\nBIENVENIDO A \"NOMBRE DEL CINE\" |");
         System.out.println("_______________________________|");
-        System.out.println("\n Haga click para iniciar\n");
+        System.out.println("\n Haga click para iniciar\n");  
     }
 
     private static ArrayList<Pelicula> cargarCartelera() {
@@ -456,7 +456,7 @@ public class actualBorrador {
 
 		//Resumen de la compra
 
-		HashSet<String > peliculasDistintas = new HashSet<>();
+		HashSet<String> peliculasDistintas = new HashSet<>();
 
 		
 
@@ -470,7 +470,7 @@ public class actualBorrador {
 		System.out.printf("\n PRECIO FINAL : %.2f €\n", precioFinal);
 
 		
-teclado.close();
+		teclado.close();
 		}
 
-		}
+	}

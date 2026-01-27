@@ -37,7 +37,8 @@ where SA.IDSala = '5' and FecHoraIni between '2026-01-15 10:00:00' and '2026-01-
 Select P.NomPelicula, P.IDPelicula, SA.NomSala, SA.IDSala, S.IDSesion, S.FecHoraIni
 From Pelicula P join Sesion S on P.IDPelicula = S.IDPelicula 
 left join Sala SA on S.IDSala = SA.IDSala
-where FecHoraIni = '2026-01-15 10:00:00';
+where FecHoraIni = '2026-01-15 10:00:00'
+limit 4;
 
 
 
@@ -54,4 +55,8 @@ ORDER BY Fecha;
 Select S.FecHoraIni, SA.NomSala, S.Precio
 from Sesion S join Sala SA on S.IDSala = SA.IDSala
 join Pelicula P on P.IDPelicula = S.IDPelicula
-where P.IDPelicula = '1' and date (S.FecHoraIni) = '2026-01-15';
+where P.IDPelicula = '1' and S.FecHoraIni >= '2026-01-15 00:00:00'
+and S.FecHoraIni <= '2026-01-16 00:00:00';
+
+select round(E.cantidad) as NumEspectadores
+from Entrada E

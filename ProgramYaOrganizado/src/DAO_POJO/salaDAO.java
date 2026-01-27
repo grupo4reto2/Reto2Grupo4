@@ -22,7 +22,7 @@ public class salaDAO {
 
 
 
-	    String consulta1 = "SELECT IDSala, NomSala, Aforo FROM Sala";
+	    String consulta1 = "";
 
 
 
