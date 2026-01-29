@@ -9,7 +9,6 @@ import java.util.Scanner;
 import clases.Cliente;
 import utils.conexion;
 
-
 public class InsertarVentaDAO {
 
     public int insertarVenta() {
@@ -41,13 +40,12 @@ public class InsertarVentaDAO {
         Cliente cliente = new Cliente(dni, nombre, apellido, correo, contraseña);
 
         // --- Datos de la compra ---
-
         System.out.print("Introduce el canal de venta: ");
         int canalVenta = sc.nextInt();
 
         System.out.print("Introduce el importe: ");
         double importe = sc.nextDouble();
-
+        
         int idCompraGenerado = -1;
 
         try (Connection con = conexion.getConnection()) {
@@ -59,13 +57,13 @@ public class InsertarVentaDAO {
                 ResultSet rs = psCheck.executeQuery();
                 if (!rs.next()) {
                     // Insertar cliente si no existe
-                    String sqlInsertCliente = "INSERT INTO cliente (DNICliente, Nombre, Apellido) VALUES (?, ?, ?, ?, ?)";
+                    String sqlInsertCliente = "INSERT INTO cliente (DNICliente, Nombre, Apellido, Correo, Contrasena) VALUES (?, ?, ?, ?, ?)";
                     try (PreparedStatement psInsertCliente = con.prepareStatement(sqlInsertCliente)) {
                         psInsertCliente.setString(1, cliente.getDni());
                         psInsertCliente.setString(2, cliente.getNombre());
                         psInsertCliente.setString(3, cliente.getApellido());
-                        psInsertCliente.setString(3, cliente.getCorreo());
-                        psInsertCliente.setString(3, cliente.getContrasena());
+                        psInsertCliente.setString(4, cliente.getCorreo());
+                        psInsertCliente.setString(5, cliente.getContrasena());
                         psInsertCliente.executeUpdate();
                         System.out.println("Cliente insertado correctamente.");
                     }
@@ -75,12 +73,12 @@ public class InsertarVentaDAO {
             }
 
             // 2️⃣ Insertar la compra
-            String sqlInsertCompra = "INSERT INTO compra (DNICliente, canal, Importe) VALUES (?, ?, ?)";
+            String sqlInsertCompra = "INSERT INTO compra (DNICliente, canal, Importe, descuento) VALUES (?, ?, ?, ?)";
             try (PreparedStatement psCompra = con.prepareStatement(sqlInsertCompra, PreparedStatement.RETURN_GENERATED_KEYS)) {
                 psCompra.setString(1, cliente.getDni());       
-                psCompra.setInt(3, canalVenta);
-                psCompra.setDouble(4, importe);
-
+                psCompra.setInt(2, canalVenta);
+                psCompra.setDouble(3, importe);
+                psCompra.setDouble(4, 0);
                 psCompra.executeUpdate();
 
                 ResultSet rsKeys = psCompra.getGeneratedKeys();
@@ -100,6 +98,31 @@ public class InsertarVentaDAO {
 
                 psEntrada.executeUpdate();
                 System.out.println("Entrada registrada correctamente.");
+            }
+
+            // 4️⃣ Calcular y actualizar el descuento según canal y número de espectadores
+            double descuento;
+
+            if (canalVenta == 1) {
+                if (espectadores == 1) {
+                    descuento = 0;
+                } else if (espectadores == 2) {
+                    descuento = 0.2;
+                } else {
+                    descuento = 0.3;
+                }
+            } else {
+                descuento = 0;
+            }
+
+            String sqlUpdateDescuento =
+                    "UPDATE compra SET descuento = ? WHERE IDCompra = ?";
+
+            try (PreparedStatement psUpdate = con.prepareStatement(sqlUpdateDescuento)) {
+                psUpdate.setDouble(1, descuento);
+                psUpdate.setInt(2, idCompraGenerado);
+                psUpdate.executeUpdate();
+                System.out.println("Descuento actualizado correctamente: " + (descuento * 100) + "%");
             }
 
         } catch (SQLException e) {

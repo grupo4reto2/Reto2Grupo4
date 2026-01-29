@@ -58,5 +58,9 @@ join Pelicula P on P.IDPelicula = S.IDPelicula
 where P.IDPelicula = '1' and S.FecHoraIni >= '2026-01-15 00:00:00'
 and S.FecHoraIni <= '2026-01-16 00:00:00';
 
-select round(E.cantidad) as NumEspectadores
-from Entrada E
+
+select P.NomPelicula, S.FecHoraIni, round(E.cantidad) as NumEspectadores
+from Entrada E join sesion S on E.IDSesion = S.IDSesion
+join Pelicula P on S.IDPelicula = P.IDPelicula
+where E.IDEntrada = ?;
+
