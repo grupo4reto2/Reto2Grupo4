@@ -9,16 +9,18 @@ public class Compra {
 	private Cliente dniCliente;
 	private double importe;
 	private double descuento;
+	private int canal;
 
 	
-	public Compra (int idCompra, LocalDateTime fechaCompra, Cliente dniCliente,  double importe, double descuento) {
+
+	public Compra (int idCompra, LocalDateTime fechaCompra, Cliente dniCliente,  double importe, double descuento, int canal) {
 
 		this.idCompra = idCompra;
 		this.fechaCompra = fechaCompra;
 		this.dniCliente = dniCliente;
 		this.importe = importe;
 		this.descuento = descuento;
-		
+		this.canal = canal;
 	}
 	
 	public int getIdCompra() {
@@ -30,7 +32,6 @@ public class Compra {
 	}
 	
 	
-
 	public Cliente getDniCliente() {
 		return dniCliente;
 	}
@@ -63,6 +64,13 @@ public class Compra {
 		this.descuento = descuento;
 	}
 
+	public int getCanal() {
+		return canal;
+	}
+	
+	public void setCanal(int canal) {
+		this.canal = canal;
+	}
 	
 
 }

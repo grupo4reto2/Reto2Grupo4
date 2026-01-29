@@ -49,11 +49,11 @@ public class Cliente {
 		this.correo = correo;
 	}
 
-	public String getcontrasena() {
+	public String getContrasena() {
 		return contraseña;
 	}
 
-	public void setcontraseña(String contrasena) {
+	public void setContraseña(String contrasena) {
 		this.contraseña = contrasena;
 	}
 

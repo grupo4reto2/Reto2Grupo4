@@ -26,6 +26,10 @@ values
 
 
 
+ALTER TABLE cliente 
+MODIFY Correo VARCHAR(255) Not NULL,
+MODIFY Contraseña VARCHAR(255) not NULL;
+
 -- =========================
 -- COMPRA
 -- =========================
@@ -36,21 +40,23 @@ CREATE TABLE `compra` (
   `Fecha` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `DNICliente` varchar(9) NOT NULL,
   `descuento` double NOT NULL,
-  `Canal` tinyint(4) NOT NULL,
+  `Canal` TINYINT(1) NOT NULL,
   `Importe` double NOT NULL,
   PRIMARY KEY (`IDCompra`),
-  KEY `fk_Compra_Cliente` (`DNICliente`),
+  CONSTRAINT `chk_Canal` CHECK (`Canal` IN (0,1)),
   CONSTRAINT `fk_Compra_Cliente` FOREIGN KEY (`DNICliente`) REFERENCES `cliente` (`DNICliente`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
 
 /*Inserts*/
 
 insert into Compra(IDCompra,Fecha,DNICliente,descuento,Canal,Importe)
 values
-(1,"2026-01-16 18:00:00",'67856221B',0.2,0,9.5),
-(2,"2026-01-17 16:00:00",'76466993C',0,1,6),
-(3,"2026-01-18 20:00:00",'67856221B',0.3,0,12),
-(4,"2026-01-19 00:00:00",'76466993C',0,1,9.5);
+(1,"2026-01-16 18:00:00",'67856221B',0.0,0,9.5),
+(2,"2026-01-17 16:00:00",'76466993C',0,0,6),
+(3,"2026-01-18 20:00:00",'67856221B',0,0,12),
+(4,"2026-01-19 00:00:00",'76466993C',0,0,9.5);
 -- =========================
 -- ENTRADA
 -- =========================
