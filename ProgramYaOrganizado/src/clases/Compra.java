@@ -20,7 +20,6 @@ public class Compra {
 		this.dniCliente = dniCliente;
 		this.importe = importe;
 		this.descuento = descuento;
-		this.descuento = descuento;
 		this.canal = canal;
 	}
 	

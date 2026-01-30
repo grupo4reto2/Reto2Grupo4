@@ -8,26 +8,26 @@ public class Sesion {
 	private LocalDateTime fecHoraFin;
 	private double precio;
 	private Sala idSala;
-	private Pelicula pelicula;
+	private Pelicula idPelicula;
 	
-	public Sesion (int idSesion, String codSesion, LocalDateTime fecHoraIni, LocalDateTime fecHoraFin,  double precio, Sala idSala, Pelicula pelicula) {
+	public Sesion (int idSesion, String codSesion, LocalDateTime fecHoraIni, LocalDateTime fecHoraFin,  double precio, Sala idSala, Pelicula idPelicula) {
 		this.idSesion = idSesion;
 		this.codSesion = codSesion;
 		this.fecHoraIni = fecHoraIni;
 		this.fecHoraFin = fecHoraFin;
 		this.precio = precio;
 		this.idSala = idSala;
-		this.pelicula = pelicula;
+		this.idPelicula = idPelicula;
 
 		}
 
 	
-	public Pelicula getPelicula() {
-		return pelicula;
+	public Pelicula getIDPelicula() {
+		return idPelicula;
 	}
 
-	public void setPelicula(Pelicula pelicula) {
-		this.pelicula= pelicula;
+	public void setIDPelicula(Pelicula idPelicula) {
+		this.idPelicula= idPelicula;
 	}
 
 	public int getIdSesion() {
@@ -89,7 +89,7 @@ public class Sesion {
 				" Fin: " + fecHoraFin +
 				" Sala: " + idSala.getNombre() + 
 				" Precio: " + precio +
-				" Película: " +  pelicula.getIdPelicula();
+				" Película: " +  idPelicula.getIdPelicula();
 	}
 	
 }

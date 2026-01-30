@@ -16,6 +16,7 @@ import clases.Cliente;
 import clases.Compra;
 import clases.Entrada;
 import utils.conexion;
+import DAO_POJO.*;
 import java.sql.Connection;
 
 public class actualBorrador {
@@ -122,13 +123,13 @@ public class actualBorrador {
             LocalDateTime f = s.getfecHoraIni();
 
             // Comparamos objetos Pelicula y misma fecha
-            if (s.getPelicula().equals(peliculaElegida) &&
+            if (s.getIDPelicula().equals(peliculaElegida) &&
                 f.toLocalDate().equals(fechaElegida.toLocalDate())) {
 
                 System.out.println(
                     numSesiones[contador] + "sesión : " +
                     f.toLocalTime() + " - " +
-                    s.getPelicula().getNomPelicula() + " (" +
+                    s.getIDPelicula().getNomPelicula() + " (" +
                     s.getidSala().getNombre() + ") - " +
                     s.getPrecio() + "€\n"
                 );
@@ -173,7 +174,7 @@ public class actualBorrador {
 
 			
 
-			peliculasDistintas.add(c.getSesion().getPelicula().getNomPelicula());
+			peliculasDistintas.add(c.getSesion().getIDPelicula().getNomPelicula());
 
 			DateTimeFormatter fechaF = DateTimeFormatter.ofPattern("dd MMMM yyyy", new Locale("es"));
 
@@ -187,7 +188,7 @@ public class actualBorrador {
 			System.out.println(
 		
 
-					"\n\nPelícula seleccionada: " + c.getSesion().getPelicula().getNomPelicula() +
+					"\n\nPelícula seleccionada: " + c.getSesion().getIDPelicula().getNomPelicula() +
 
 					"\nFecha y Hora: " + c.getSesion().getfecHoraIni().format(fechaF) +
 
@@ -230,7 +231,7 @@ public class actualBorrador {
 
 			return	precioTotal * 0.80;
 
-		} else if (numPelis >= 3) {
+		} else if (numPelis > 2) {
 
 					
 
@@ -364,7 +365,7 @@ public class actualBorrador {
 
 		
 
-		if (s.getPelicula().equals(peliculaElegida) &&
+		if (s.getIDPelicula().equals(peliculaElegida) &&
 
 		((f.toLocalDate().equals(fechaElegida.toLocalDate()) && f.getHour() >= 10) ||
 
@@ -456,18 +457,41 @@ public class actualBorrador {
 
 		//Resumen de la compra
 
-		HashSet<String> peliculasDistintas = new HashSet<>();
+		double precioTotal = 0;
+		
+		for (Entrada c:carrito) {
+			double subTotal = c.getcantidad() * c.getSesion().getPrecio();
+			precioTotal = subTotal + precioTotal;
+			
+			DateTimeFormatter fechaF = DateTimeFormatter.ofPattern("dd MMMM yyyy");
+			System.out.println(
+					"\nPelicula: " + c.getSesion().getIDPelicula().getNomPelicula()+
+					"\nFecha y hora: " +c.getSesion().getfecHoraIni().format(fechaF)+
+					"\nSala: " +c.getSesion().getidSala().getNombre()+
+					"\nNumero de entradas: " + c.getcantidad()+
+					"\nSubtotal: " + subTotal+ " €"
+					);
+		}
+
+		System.out.println("\n---------------RESUMEN---------------");
+		System.out.printf("Subtotal (sin descuentos): %.2f €\n", precioTotal);
+		
+		
+		try {
+	          EntradaDAO dao = new EntradaDAO();
+	          dao.mostrarDescuentos();   // AQUÍ se pide al DAO que ejecute
+	      } catch (Exception e) {
+	          System.out.println("Error al mostrar entradas: " + e.getMessage());
+	      }
+		
+		//double subTotal = resumenCompra(carrito, peliculasDistintas);
 
 		
 
-		double subTotal = resumenCompra(carrito, peliculasDistintas);
-
-		
-
-		double precioFinal = calcularDescuento(subTotal, peliculasDistintas.size());
+		//double precioFinal = calcularDescuento(subTotal, peliculasDistintas.size());
 
 
-		System.out.printf("\n PRECIO FINAL : %.2f €\n", precioFinal);
+		System.out.printf("\n PRECIO FINAL : %.2f €\n", precioTotal);
 
 		
 		teclado.close();

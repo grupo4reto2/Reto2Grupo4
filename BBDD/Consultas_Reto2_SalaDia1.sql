@@ -64,3 +64,9 @@ from Entrada E join sesion S on E.IDSesion = S.IDSesion
 join Pelicula P on S.IDPelicula = P.IDPelicula
 where E.IDEntrada = ?;
 
+	select	count(distinct S.IDPelicula) as peliculasDistintas,
+			sum(E.Cantidad * S.Precio) as importeTotal
+	from	Entrada E join Sesion S 
+					on E.IDSesion = S.IDSesion
+	where	E.IDCompra = ?;
+
