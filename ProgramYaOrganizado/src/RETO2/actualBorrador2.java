@@ -18,9 +18,8 @@ import clases.Entrada;
 import utils.conexion;
 import DAO_POJO.*;
 import java.sql.Connection;
-import java.sql.SQLException;
 
-public class actualBorrador {
+public class actualBorrador2 {
 
     public static void getConexion() {
         Connection conexxion = conexion.getConnection();
@@ -38,13 +37,20 @@ public class actualBorrador {
     }
 
     private static ArrayList<Pelicula> cargarCartelera() {
-        ArrayList<Pelicula> peliculas = new ArrayList<>();
-        peliculas.add(new Pelicula(1, "El Rey León", 120, null, ""));
-        peliculas.add(new Pelicula(2, "No Respires", 90, null, ""));
-        peliculas.add(new Pelicula(3, "Senderos de Gloria", 130, null, ""));
-        peliculas.add(new Pelicula(4, "Cop Car", 95, null, ""));
-        peliculas.add(new Pelicula(5, "¡Aterriza Como Puedas!", 88, null, ""));
-        return peliculas;
+        
+    	PeliculaDAO daoPelis = new PeliculaDAO();
+    	
+    	try {
+    		
+    		 return daoPelis.mostrarCartelera();
+    		
+    	} catch (Exception e) {
+    		
+    		System.out.println("Error al cargar cartelera: " + e.getMessage());
+    		
+    		return null;
+    	}
+    	
     }
 
     private static void mostrarCartelera(ArrayList<Pelicula> peliculas) {
@@ -55,57 +61,59 @@ public class actualBorrador {
     }
 
     private static ArrayList<Sala> cargarSalas() {
-        ArrayList<Sala> salas = new ArrayList<>();
-        salas.add(new Sala(1, "Sala 1", 150));
-        salas.add(new Sala(2, "Sala 2", 100));
-        salas.add(new Sala(3, "Sala 3", 150));
-        salas.add(new Sala(4, "Sala 4", 100));
-        salas.add(new Sala(5, "Sala 5", 150));
-        return salas;
+    	salaDAO daoSala = new salaDAO();
+    	
+    	try {
+    		
+    		ArrayList<Sala> salas = daoSala.mostrarSalas();
+    		
+    		System.out.println("Salas: \n" + salas.size());
+    		
+    		return salas;
+    		
+    	} catch (Exception e) {
+    		
+    		System.out.println("Error al buscar salas: " + e.getMessage());
+    		
+    		return new ArrayList<>();
+    		
+    	}
+    
     }
 
     private static ArrayList<Sesion> cargarSesiones(ArrayList<Pelicula> peliculas, ArrayList<Sala> salas) {
-        ArrayList<Sesion> sesiones = new ArrayList<>();
-        int idSesion = 1;
+      
+    	SesionDAO daoSesion = new SesionDAO();
+    	
+    	
+    	try {
+    		
+        	ArrayList<Sesion> sesiones = daoSesion.mostrarSesiones(peliculas, salas);
+        	
+        	System.out.println("Sesiones: " + sesiones.size());
+        	
+        	
+        	
+        	return sesiones;
 
-        // Recorremos cada día (7 días)
-        for (int d = 0; d < 7; d++) {
-            LocalDateTime inicioBase = LocalDateTime.of(2026, 2, 1, 10, 0).plusDays(d);
-            LocalDateTime finBase    = LocalDateTime.of(2026, 2, 1, 12, 0).plusDays(d);
+    		
+    	} catch (Exception e) {
+    	
+    		System.out.println("Error al mostrar las sesiones: " + e.getMessage() );
+    		
+    		return new ArrayList<>();
+    				
+    	}
+    	
+    	
+    	
 
-            // Recorremos cada película
-            for (int p = 0; p < peliculas.size(); p++) {
-
-                // Elegimos sala de forma circular si hay más películas que salas
-                Sala sala = salas.get(p % salas.size());
-
-                // Creamos 8 sesiones por película
-                for (int s = 0; s < 8; s++) {
-                    double precio;
-                    if (s <= 2) precio = 6;
-                    else if (s <= 5) precio = 9.50;
-                    else precio = 12;
-
-                    Sesion sesion = new Sesion(
-                            idSesion++,
-                            String.format("S%02d-%02d", p + 1, s + 1),
-                            inicioBase.plusHours(2 * s),
-                            finBase.plusHours(2 * s),
-                            precio,
-                            sala,
-                            peliculas.get(p)
-                    );
-
-                    sesiones.add(sesion);
-                    sala.getSesiones().add(sesion);
-                }
-            }
+    	
+    			
+    	
         }
 
-        // Ordenar sesiones por fecha de inicio
-        Collections.sort(sesiones, Comparator.comparing(Sesion::getfecHoraIni));
-        return sesiones;
-    }
+ 
     
     private static void mostrarSesiones(ArrayList<Sesion> sesiones, Pelicula peliculaElegida, LocalDateTime fechaElegida) {
 
@@ -254,53 +262,15 @@ public class actualBorrador {
 
 	}
 
-	public static void RegistroCompra() {
-		System.out.println("\n---REGISTRO DE LA COMPRA---");
-		
-		InsertarVentaDAO ventaDAO = new InsertarVentaDAO();
-		int idCompra = ventaDAO.insertarVenta();
-		
-		if(idCompra != -1) {
-			System.out.println("Compra guardada correctamente con ID: " + idCompra);
-		}else {
-			System.out.println("Error al guardar la compra");
-		}
-	}
+	
 
-	public static int contarPeliculas(ArrayList<Entrada> carrito) {
-		
-		int contador = 0;
+	
 
-	    for (int i = 0; i < carrito.size(); i++) {
-	        int idPeliculaActual = carrito.get(i).getSesion().getIDPelicula().getIdPelicula();
-
-	        boolean yaContada = false;
-
-	        // Comprobamos si esa película ya apareció antes
-	        for (int j = 0; j < i; j++) {
-	            int idPeliculaAnterior = carrito.get(j).getSesion().getIDPelicula().getIdPelicula();
-
-	            if (idPeliculaActual == idPeliculaAnterior) {
-	                yaContada = true;
-	            }
-	        }
-
-	        if (!yaContada) {
-	            contador++;
-	        }
-	    }
-
-	    return contador;
-	}
+	
 
 	public static void main(String[] args) {
 
-		
-
 		Scanner teclado = new Scanner(System.in);
-		boolean resetearPrograma = true;
-		
-		while (resetearPrograma) {
 
 		mensajeBienvenida();
 
@@ -320,7 +290,7 @@ public class actualBorrador {
 
 		ArrayList<Entrada> carrito = new ArrayList<>();
 
-		
+		ArrayList<Sesion> sesionesFiltradas = new ArrayList<>();
 
 		ArrayList<Compra> carritoFinal = new ArrayList<>();
 
@@ -336,35 +306,25 @@ public class actualBorrador {
 
 		mostrarCartelera(peliculas);
 
-		System.out.println("\nElige una pelicula (1-" + peliculas.size() + ")\n");
+		System.out.println("\nElige una pelicula (1-" + peliculas.size() + ")");
 
 		int opcionPelicula = teclado.nextInt();
 
-		teclado.nextLine();
+		teclado.nextLine();	
 
-		
-
-		if (opcionPelicula == 0) {
-
-		
+		if (opcionPelicula == 0) {	
 
 		seguirComprando = false;
 
 		
-
 		}
 
 		if (seguirComprando) {
 
 		Pelicula peliculaElegida = peliculas.get(opcionPelicula -1);
-
-		
-
 		boolean seguirConPelicula = true;
 
 		while (seguirConPelicula) {
-
-		
 
 		mostrarFechas(fechas);
 
@@ -375,32 +335,18 @@ public class actualBorrador {
 		teclado.nextLine();
 
 		LocalDateTime fechaElegida = fechas.get(opcionFecha - 1);
-
-		
-
 		mostrarSesiones(sesiones, peliculaElegida, fechaElegida);
 
-		
-
 		System.out.println("\nElige una sesion: (1-8) ");
-
 		int opcionSesion = teclado.nextInt();
 
 		teclado.nextLine();
-
 		
 
-		ArrayList<Sesion> sesionesFiltradas = new ArrayList<>();
 
-		
-
-		for (Sesion s : sesiones) {
-
-		
+		for (Sesion s : sesiones) {	
 
 		LocalDateTime f = s.getfecHoraIni();
-
-		
 
 		if (s.getIDPelicula().equals(peliculaElegida) &&
 
@@ -508,77 +454,80 @@ public class actualBorrador {
 					"\nNumero de entradas: " + c.getcantidad()+
 					"\nSubtotal: " + subTotal+ " €"
 					);
+			
 		}
-		
 
 		System.out.println("\n---------------RESUMEN---------------");
 		System.out.printf("Subtotal (sin descuentos): %.2f €\n", precioTotal);
 		
-		int numPeliculas = contarPeliculas(carrito);
-		System.out.println("Peliculas distintas: " +numPeliculas);
 		
-		double precioFinal = calcularDescuento(precioTotal, numPeliculas);
-		System.out.printf("\n PRECIO FINAL : %.2f €\n", precioFinal);
+		try {
+	          EntradaDAO dao = new EntradaDAO();
+	          dao.mostrarDescuentos();   // AQUÍ se pide al DAO que ejecute
+	      } catch (Exception e) {
+	          System.out.println("Error al mostrar entradas: " + e.getMessage());
+	      }
+		
+		//double subTotal = resumenCompra(carrito, peliculasDistintas);
+
+		
+
+		//double precioFinal = calcularDescuento(subTotal, peliculasDistintas.size());
+
+
+		System.out.printf("\n PRECIO FINAL : %.2f €\n", precioTotal);
 		
 		
 		
+		ClienteDAO daoCli = new ClienteDAO();
 		
-		ClienteDAO dao = new ClienteDAO(); 
-		String emoji = "\uD83D\uDE00";
+		String emogi = "\uD83D\uDE00";
 		int contador = 1;
-		boolean valido = false;
-		
+		boolean clienteValido = false;
 		
 		System.out.println("\n----------------LOGIN-----------------");
 
-		
-		while (contador < 4 && !valido) {
+		while (!clienteValido && contador <4) {
 			
 			System.out.println("\nIntento " + contador + "/3");
 			
+			
 			System.out.println("\nCorreo electrónico: ");
 			String correo = teclado.nextLine();
+			
 			System.out.println("\nContraseña: ");
 			String passwd = teclado.nextLine();
-
 			
 			
 			try {
 				
-				Cliente login = dao.Login(correo, passwd);
+				Cliente login = daoCli.login(correo, passwd);
+				
 				
 				if (login != null) {
 					
-					System.out.println("\nLogin correcto, ¡Bienvenido seas " + login.getNombre() + " " + login.getApellido() + " " + emoji + "!");			
-				
-					valido = true;
+					System.out.println("\nLogin correcto, ¡Bienvenido seas " + login.getNombre() + " " + login.getApellido() + " " + emogi + "!");			
 					
-					resetearPrograma = false;
-
+					clienteValido = true;
 					
-				}  else  {
+				} else {
 					
-					System.out.println("Login incorrecto \n");
+					System.out.println("Login incorrecto");
 					contador++;
-					
-					
 					
 				}
 				
 				
-				
 			} catch (Exception e) {
 				
-			
 				System.out.println("Error al mostrar cliente: " + e.getMessage());
 				
 			}
 			
+			
 		}
 		
-		
-		
-		
+		teclado.close();
 		}
+
 	}
-}

@@ -25,11 +25,12 @@ public class EntradaDAO {
     	}
 
     	// 2️⃣ Consultar entradas de esa compra
-    	String consulta = "SELECT COUNT(DISTINCT S.IDPelicula) AS peliculasDistintas, " +
-    	                  "SUM(E.Cantidad * S.Precio) AS importeTotal " +
-    	                  "FROM Entrada E " +
-    	                  "JOIN Sesion S ON E.IDSesion = S.IDSesion " +
-    	                  "WHERE E.IDCompra = ?";
+    	String consulta = "SELECT  COUNT(DISTINCT S.IDPelicula) AS peliculasDistintas,\r\n"
+    			+ "        SUM(E.Cantidad * S.Precio) AS importeTotal\r\n"
+    			+ "FROM    Entrada E\r\n"
+    			+ "JOIN    Sesion S ON E.IDSesion = S.IDSesion\r\n"
+    			+ "WHERE   E.IDCompra = ?;"
+    			+ "";
 
     	String sqlUpdateDescuento = "UPDATE Compra SET descuento = ? WHERE IDCompra = ?";
 

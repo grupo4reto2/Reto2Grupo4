@@ -71,5 +71,44 @@ public class PeliculaDAO {
 
 		    	}
 	    return peliculas;
+	    
 	}
+	
+	
+	
+	
+		public ArrayList<Pelicula> mostrarCartelera() throws SQLException {
+				
+				ArrayList<Pelicula> peliculas = new ArrayList<>();
+				
+				String sql = "Select IDPelicula, NomPelicula, Duracion, IDGenero FROM pelicula";
+				
+				try (Connection conn = conexion.getConnection();
+						PreparedStatement ps = conn.prepareStatement(sql);
+						ResultSet rs = ps.executeQuery()) {
+					
+					
+					while (rs.next()) {
+						
+						int id = rs.getInt("IDPelicula");
+						String nombre = rs.getString("NomPelicula");
+						int duracion = rs.getInt("Duracion");
+						int idGenero = rs.getInt("IDGenero");
+						
+						Pelicula pelis = new Pelicula(id, nombre, duracion, new Genero(idGenero, null), null);
+					
+						peliculas.add(pelis);
+					}
+					
+				}
+				
+				return peliculas;
+			
+			
+			
+			
+			
+		}
+		
+		
 }

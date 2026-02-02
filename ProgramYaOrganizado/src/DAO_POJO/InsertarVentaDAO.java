@@ -12,51 +12,37 @@ import utils.conexion;
 public class InsertarVentaDAO {
 
     public int insertarVenta() {
-        Scanner sc = new Scanner(System.in);
-
-        // --- Datos de la sesión y venta ---
-        System.out.print("Introduce el ID de la sesión: ");
-        int idSesion = sc.nextInt();
-
-        System.out.print("Introduce el número de espectadores: ");
-        int espectadores = sc.nextInt();
+        Scanner teclado = new Scanner(System.in);
 
         // --- Datos del cliente ---
         System.out.print("Introduce el DNI del cliente: ");
-        String dni = sc.next();
+        String dni = teclado.next();
 
         System.out.print("Introduce el nombre del cliente: ");
-        String nombre = sc.next();
+        String nombre = teclado.next();
 
         System.out.print("Introduce el apellido del cliente: ");
-        String apellido = sc.next();
-        
+        String apellido = teclado.next();
+
         System.out.print("Introduce el correo del cliente: ");
-        String correo = sc.next();
-        
+        String correo = teclado.next();
+
         System.out.print("Introduce la contraseña del cliente: ");
-        String contraseña = sc.next();
+        String contraseña = teclado.next();
 
         Cliente cliente = new Cliente(dni, nombre, apellido, correo, contraseña);
 
-        // --- Datos de la compra ---
-        System.out.print("Introduce el canal de venta: ");
-        int canalVenta = sc.nextInt();
-
-        System.out.print("Introduce el importe: ");
-        double importe = sc.nextDouble();
-        
         int idCompraGenerado = -1;
+        double subtotal = 0;
 
         try (Connection con = conexion.getConnection()) {
 
-            // 1️⃣ Verificar si el cliente existe
+            // 1️ Verificar si el cliente existe
             String sqlCheckCliente = "SELECT DNICliente FROM cliente WHERE DNICliente = ?";
-            try (PreparedStatement psCheck = con.prepareStatement(sqlCheckCliente)) {
-                psCheck.setString(1, cliente.getDni());
-                ResultSet rs = psCheck.executeQuery();
+            try (PreparedStatement ptecladoheck = con.prepareStatement(sqlCheckCliente)) {
+                ptecladoheck.setString(1, cliente.getDni());
+                ResultSet rs = ptecladoheck.executeQuery();
                 if (!rs.next()) {
-                    // Insertar cliente si no existe
                     String sqlInsertCliente = "INSERT INTO cliente (DNICliente, Nombre, Apellido, Correo, Contrasena) VALUES (?, ?, ?, ?, ?)";
                     try (PreparedStatement psInsertCliente = con.prepareStatement(sqlInsertCliente)) {
                         psInsertCliente.setString(1, cliente.getDni());
@@ -72,65 +58,74 @@ public class InsertarVentaDAO {
                 }
             }
 
-            // 2️⃣ Insertar la compra
-            String sqlInsertCompra = "INSERT INTO compra (DNICliente, canal, Importe, descuento) VALUES (?, ?, ?, ?)";
-            try (PreparedStatement psCompra = con.prepareStatement(sqlInsertCompra, PreparedStatement.RETURN_GENERATED_KEYS)) {
-                psCompra.setString(1, cliente.getDni());       
-                psCompra.setInt(2, canalVenta);
-                psCompra.setDouble(3, importe);
-                psCompra.setDouble(4, 0);
-                psCompra.executeUpdate();
+            // 2️ Datos de la compra
+            System.out.print("Introduce el número de películas distintas que compra: ");
+            int numPeliculasDistintas = teclado.nextInt();
 
-                ResultSet rsKeys = psCompra.getGeneratedKeys();
+            // Insertamos la compra inicialmente con Importe 0 y descuento 0
+            String sqlInsertCompra = "INSERT INTO compra (DNICliente, Canal, Importe, descuento) VALUES (?, ?, ?, ?)";
+            try (PreparedStatement ptecladoompra = con.prepareStatement(sqlInsertCompra, PreparedStatement.RETURN_GENERATED_KEYS)) {
+                ptecladoompra.setString(1, cliente.getDni());
+                ptecladoompra.setInt(2, 0); // Canal por defecto
+                ptecladoompra.setDouble(3, 0); // Importe temporal
+                ptecladoompra.setDouble(4, 0); // descuento temporal
+                ptecladoompra.executeUpdate();
+                ResultSet rsKeys = ptecladoompra.getGeneratedKeys();
                 if (rsKeys.next()) {
                     idCompraGenerado = rsKeys.getInt(1);
                 }
-
-                System.out.println("Compra registrada correctamente con ID: " + idCompraGenerado);
             }
 
-            // 3️⃣ Insertar la entrada
+            // 3️ Agregar entradas por cada película
             String sqlInsertEntrada = "INSERT INTO entrada (cantidad, IDSesion, IDCompra) VALUES (?, ?, ?)";
             try (PreparedStatement psEntrada = con.prepareStatement(sqlInsertEntrada)) {
-                psEntrada.setInt(1, espectadores);
-                psEntrada.setInt(2, idSesion);
-                psEntrada.setInt(3, idCompraGenerado);
+                for (int i = 1; i <= numPeliculasDistintas; i++) {
+                    System.out.print("Introduce el ID de la sesión de la película #" + i + ": ");
+                    int idSesion = teclado.nextInt();
 
-                psEntrada.executeUpdate();
-                System.out.println("Entrada registrada correctamente.");
-            }
+                    System.out.print("Introduce el número de espectadores para esta película: ");
+                    int espectadores = teclado.nextInt();
 
-            // 4️⃣ Calcular y actualizar el descuento según canal y número de espectadores
-            double descuento;
+                    System.out.print("Introduce el precio por entrada: ");
+                    double precio = teclado.nextDouble();
 
-            if (canalVenta == 1) {
-                if (espectadores == 1) {
-                    descuento = 0;
-                } else if (espectadores == 2) {
-                    descuento = 0.2;
-                } else {
-                    descuento = 0.3;
+                    subtotal += precio * espectadores;
+
+                    // Insertar la entrada
+                    psEntrada.setInt(1, espectadores);
+                    psEntrada.setInt(2, idSesion);
+                    psEntrada.setInt(3, idCompraGenerado);
+                    psEntrada.executeUpdate();
                 }
-            } else {
-                descuento = 0;
             }
 
-            String sqlUpdateDescuento =
-                    "UPDATE compra SET descuento = ? WHERE IDCompra = ?";
+            // 4️⃣ Calcular descuento según número de películas distintas
+            double descuento = 0;
+            if (numPeliculasDistintas == 2) {
+                descuento = 0.2;
+            } else if (numPeliculasDistintas >= 3) {
+                descuento = 0.3;
+            }
 
-            try (PreparedStatement psUpdate = con.prepareStatement(sqlUpdateDescuento)) {
-                psUpdate.setDouble(1, descuento);
-                psUpdate.setInt(2, idCompraGenerado);
+            // 5️⃣ Actualizar la compra con subtotal y descuento final
+            String sqlUpdateCompra = "UPDATE compra SET Importe = ?, descuento = ? WHERE IDCompra = ?";
+            try (PreparedStatement psUpdate = con.prepareStatement(sqlUpdateCompra)) {
+                psUpdate.setDouble(1, subtotal);
+                psUpdate.setDouble(2, descuento);
+                psUpdate.setInt(3, idCompraGenerado);
                 psUpdate.executeUpdate();
-                System.out.println("Descuento actualizado correctamente: " + (descuento * 100) + "%");
             }
+
+            System.out.println("Compra registrada correctamente con ID: " + idCompraGenerado);
+            System.out.println("Subtotal: " + subtotal);
+            System.out.println("descuento aplicado: " + (descuento * 100) + "%");
 
         } catch (SQLException e) {
             System.out.println("Error al registrar la venta: " + e.getMessage());
             e.printStackTrace();
         }
 
-        sc.close();
+        teclado.close();
         return idCompraGenerado;
     }
 }

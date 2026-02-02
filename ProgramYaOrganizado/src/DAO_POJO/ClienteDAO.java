@@ -25,4 +25,87 @@ public class ClienteDAO {
             throw ex;
         }
     }
+    
+    
+    
+    public Cliente Login(String correo, String contraseña) throws SQLException {
+    	
+    	Cliente cliente = null;
+    	
+    	String sql = "Select * from Cliente where correo = ? and contraseña = ?";
+    	
+    	try (Connection conn = conexion.getConnection();
+    			PreparedStatement ps = conn.prepareStatement(sql)) {
+    		
+    		
+    		ps.setString(1, correo);
+    		ps.setString(2, contraseña);
+    		
+    		
+    		try (ResultSet rs = ps.executeQuery()) {
+    			
+    			if (rs.next() ) {
+    				
+    				cliente = new Cliente (
+    						
+    						rs.getString("DNICliente"),
+    						rs.getString("Nombre"),
+    						rs.getString("Apellido"),
+    						rs.getString("Correo"),
+    						rs.getString("Contraseña")
+    						
+    						);
+    						
+    				
+    			}
+    			
+    		}
+    		
+    		
+    	}
+		return cliente;
+		
+		
+    }
+		
+		 public Cliente login(String correo, String contraseña) throws SQLException {
+		    	
+		    	Cliente cliente = null;
+		    	
+		    	String sql = "Select * from Cliente where correo = ? and contraseña = ? ";
+		    	
+		    	try (Connection conn = conexion.getConnection();
+		    			PreparedStatement ps = conn.prepareStatement(sql)) {
+		    		
+		    		ps.setString(1, correo);
+		    		ps.setString(2, contraseña);
+		    		
+		    		
+		    		try (ResultSet rs = ps.executeQuery()) {
+		    			
+		    			if (rs.next()) {
+		    				
+		    				cliente = new Cliente (
+		    						
+		    						rs.getString("DNICliente"),
+		    						rs.getString("Nombre"),
+		    						rs.getString("Apellido"),
+		    						rs.getString("Correo"),
+		    						rs.getString("Contraseña")
+		    						
+		    						);
+		    				
+		    			}
+		    			
+		    		}
+		    		
+		    	}
+				return cliente;
+		
+    	
+    }
+    
+    
+    
+    
 }

@@ -68,5 +68,8 @@ where E.IDEntrada = ?;
 			sum(E.Cantidad * S.Precio) as importeTotal
 	from	Entrada E join Sesion S 
 					on E.IDSesion = S.IDSesion
-	where	E.IDCompra = ?;
+	where	E.IDCompra = (
+    select	max(IDCompra) 
+    from 	Compra C2
+    where 	C2.IDCliente = ?);
 

@@ -8,49 +8,42 @@ import utils.conexion;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.List;
 
 import clases.Sala;
 
 public class salaDAO {
 
-	public List<Sala> mostrarSalas() throws SQLException {
+	public ArrayList<Sala> mostrarSalas() throws SQLException {
 
 
 
-	    List<Sala> Salas = new ArrayList<>();
+	    ArrayList<Sala> salas = new ArrayList<>();
 
 
 
-	    String consulta1 = "";
+	    String sql = "Select * from sala";
 
 
 
 	    try (Connection conn = conexion.getConnection();
 
-	         PreparedStatement sentencia = conn.prepareStatement(consulta1);
+	         PreparedStatement sentencia = conn.prepareStatement(sql);
 
 	         ResultSet rs = sentencia.executeQuery()) {
 
 
-
-	        System.out.println("---- CONSULTA Salas ----");
-
-
-
 	        while (rs.next()) {
 
-	            int id = rs.getInt("IDSala");
-
+	            int idSala = rs.getInt("IDSala");
 	            String nomSala = rs.getString("NomSala");
-	            String aforo = rs.getString("Aforo");
+	            int aforo = rs.getInt("Aforo");
 	          
 
 
-	            System.out.println(id + " - " + nomSala +  " - " + aforo + " - " );
+	            salas.add(new Sala(idSala, nomSala, aforo));
 	            
 	        }
 	    }
-		return Salas;
+		return salas;
 	}	
 }
