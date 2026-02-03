@@ -7,7 +7,7 @@ import java.util.Locale;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashSet;
+
 
 import clases.Sala;
 import clases.Sesion;
@@ -32,7 +32,7 @@ public class actualBorrador {
     private static void mensajeBienvenida() {
         String negrita = "\033[1m";
         System.out.println("_______________________________ ");
-        System.out.println(negrita + "\nBIENVENIDO A \"NOMBRE DEL CINE\" |");
+        System.out.println(negrita + "\nBIENVENIDO A \"ELORRIETA CINEMA\" |");
         System.out.println("_______________________________|");
         System.out.println("\n Haga click para iniciar\n");  
     }
@@ -160,63 +160,44 @@ public class actualBorrador {
         }
     }
 
-	public static double resumenCompra (ArrayList<Entrada> carrito, HashSet<String> peliculasDistintas) {
+    public static double resumenCompra(ArrayList<Entrada> carrito) {
+        System.out.println("\n------------ RESUMEN DE LA COMPRA -------------");
+        double precioTotal = 0;
 
-		
+        // Lista para almacenar películas distintas
+        ArrayList<String> peliculasDistintas = new ArrayList<>();
 
-		System.out.println("\n------------ RESUMEN DE LA COMPRA -------------");
+        for (Entrada c : carrito) {
+            String nombrePeli = c.getSesion().getIDPelicula().getNomPelicula();
 
-		
+            // Agregar solo si no está ya en la lista
+            if (!peliculasDistintas.contains(nombrePeli)) {
+                peliculasDistintas.add(nombrePeli);
+            }
 
-		double precioTotal = 0;
+            DateTimeFormatter fechaF = DateTimeFormatter.ofPattern("dd MMMM yyyy", new Locale("es"));
+            double subTotal = c.getcantidad() * c.getSesion().getPrecio();
+            precioTotal += subTotal;
 
+            System.out.println(
+                    "\n\nPelícula seleccionada: " + nombrePeli +
+                    "\nFecha y Hora: " + c.getSesion().getfecHoraIni().format(fechaF) +
+                    "\nSala: " + c.getSesion().getidSala().getNombre() +
+                    "\nNúmero de entradas: " + c.getcantidad() +
+                    "\nPrecio total de la(s) entrada(s) ---> " + subTotal + " € "
+            );
+        }
 
-		for (Entrada c : carrito) {
+        System.out.println("\nPRECIO TOTAL (SIN DESCUENTOS APLICADOS): " + precioTotal + " €");
 
-			
+        // Mostrar películas distintas
+        System.out.println("\nPelículas distintas compradas:");
+        for (String p : peliculasDistintas) {
+            System.out.println(" - " + p);
+        }
 
-			peliculasDistintas.add(c.getSesion().getIDPelicula().getNomPelicula());
-
-			DateTimeFormatter fechaF = DateTimeFormatter.ofPattern("dd MMMM yyyy", new Locale("es"));
-
-			
-
-			double subTotal = c.getcantidad() * c.getSesion().getPrecio();
-
-			precioTotal += subTotal;
-
-
-			System.out.println(
-		
-
-					"\n\nPelícula seleccionada: " + c.getSesion().getIDPelicula().getNomPelicula() +
-
-					"\nFecha y Hora: " + c.getSesion().getfecHoraIni().format(fechaF) +
-
-					"\nSala: "	+ c.getSesion().getidSala().getIdSala() +
-
-					"\nNúmero de entradas: " + c.getcantidad() +
-
-					"\nPrecio total de la(s) entrada(s) ---> " + subTotal + " € "
-
-					);	
-
-					
-
-					}	
-
-		
-
-		System.out.println("\nPRECIO TOTAL (SIN DESCUENTOS APLICADOS): " + precioTotal + " €" );
-
-					
-
-		return precioTotal;
-
-		
-
-	}
-
+        return precioTotal;
+    }
 
 	public static double calcularDescuento (double precioTotal, int numPelis ) {		
 
@@ -254,11 +235,11 @@ public class actualBorrador {
 
 	}
 
-	public static void RegistroCompra() {
+	public static void RegistroCompra(Cliente cliente, ArrayList<Entrada>carrito) {
 		System.out.println("\n---REGISTRO DE LA COMPRA---");
 		
 		InsertarVentaDAO ventaDAO = new InsertarVentaDAO();
-		int idCompra = ventaDAO.insertarVenta();
+		int idCompra = ventaDAO.insertarVenta(cliente, carrito);
 		
 		if(idCompra != -1) {
 			System.out.println("Compra guardada correctamente con ID: " + idCompra);
@@ -483,14 +464,16 @@ public class actualBorrador {
 		break;
 
 		
+		default: System.out.println("Opcion no valida");
+		
+		break;
+			}	
 
 		}	
 
-		}	
+	}	
 
-		}	
-
-		}
+}
 
 		//Resumen de la compra
 
@@ -523,21 +506,21 @@ public class actualBorrador {
 		
 		
 		
+		
+		System.out.println("\n----------------LOGIN-----------------");
+
 		ClienteDAO dao = new ClienteDAO(); 
 		String emoji = "\uD83D\uDE00";
 		int contador = 1;
 		boolean valido = false;
 		
 		
-		System.out.println("\n----------------LOGIN-----------------");
-
-		
 		while (contador < 4 && !valido) {
 			
 			System.out.println("\nIntento " + contador + "/3");
 			
-			System.out.println("\nCorreo electrónico: ");
-			String correo = teclado.nextLine();
+			System.out.println("\nNombre: ");
+			String nombre = teclado.nextLine();
 			System.out.println("\nContraseña: ");
 			String passwd = teclado.nextLine();
 
@@ -545,7 +528,7 @@ public class actualBorrador {
 			
 			try {
 				
-				Cliente login = dao.Login(correo, passwd);
+				Cliente login = dao.Login(nombre, passwd);
 				
 				if (login != null) {
 					
@@ -554,15 +537,13 @@ public class actualBorrador {
 					valido = true;
 					
 					resetearPrograma = false;
-
+					RegistroCompra(login, carrito);
 					
 				}  else  {
 					
 					System.out.println("Login incorrecto \n");
 					contador++;
-					
-					
-					
+						
 				}
 				
 				
@@ -572,13 +553,8 @@ public class actualBorrador {
 			
 				System.out.println("Error al mostrar cliente: " + e.getMessage());
 				
+				}
 			}
-			
-		}
-		
-		
-		
-		
 		}
 	}
 }

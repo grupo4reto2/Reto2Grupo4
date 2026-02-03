@@ -28,17 +28,17 @@ public class ClienteDAO {
     
     
     
-    public Cliente Login(String correo, String contraseña) throws SQLException {
+    public Cliente Login(String nombre, String contraseña) throws SQLException {
     	
     	Cliente cliente = null;
     	
-    	String sql = "Select * from Cliente where correo = ? and contraseña = ?";
+    	String sql = "Select * from Cliente where Nombre = ? and contraseña = ?";
     	
     	try (Connection conn = conexion.getConnection();
     			PreparedStatement ps = conn.prepareStatement(sql)) {
     		
     		
-    		ps.setString(1, correo);
+    		ps.setString(1, nombre);
     		ps.setString(2, contraseña);
     		
     		
@@ -68,16 +68,16 @@ public class ClienteDAO {
 		
     }
 		
-		 public Cliente login(String correo, String contraseña) throws SQLException {
+		 public Cliente login(String nombre, String contraseña) throws SQLException {
 		    	
 		    	Cliente cliente = null;
 		    	
-		    	String sql = "Select * from Cliente where correo = ? and contraseña = ? ";
+		    	String sql = "Select * from Cliente where nombre = ? and contraseña = ? ";
 		    	
 		    	try (Connection conn = conexion.getConnection();
 		    			PreparedStatement ps = conn.prepareStatement(sql)) {
 		    		
-		    		ps.setString(1, correo);
+		    		ps.setString(1, nombre);
 		    		ps.setString(2, contraseña);
 		    		
 		    		

@@ -15,6 +15,12 @@ public class Cliente {
 		this.correo = correo;
 		this.contraseña = contraseña;
 	}
+	
+	public Cliente(String nombre, String contraseña, String dni) {
+		this.nombre = nombre;
+		this.contraseña = contraseña;
+		this.dni = dni;
+	}
 
 	public String getDni() {
 		return dni;
