@@ -7,7 +7,7 @@ import java.util.Locale;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-
+import factura.ticket;
 
 import clases.Sala;
 import clases.Sesion;
@@ -17,11 +17,17 @@ import clases.Compra;
 import clases.Entrada;
 import utils.conexion;
 import DAO_POJO.*;
+
+import java.io.*;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
 public class actualBorrador {
 
+	/**
+	 * Método dedicado a la conexión entre la base de datos y la aplicación
+	 */
     public static void getConexion() {
         Connection conexxion = conexion.getConnection();
         if (conexxion != null) {
@@ -29,32 +35,50 @@ public class actualBorrador {
         }
     }
 
-    private static void mensajeBienvenida() {
+    /**
+     * Método dedicado a dar la bienvenida al cliente
+     */
+    public static void mensajeBienvenida() {
         String negrita = "\033[1m";
         System.out.println("_______________________________ ");
         System.out.println(negrita + "\nBIENVENIDO A \"ELORRIETA CINEMA\" |");
         System.out.println("_______________________________|");
         System.out.println("\n Haga click para iniciar\n");  
+        
+        cargarCartelera();
     }
 
-    private static ArrayList<Pelicula> cargarCartelera() {
+    /**
+     *Metodo dedicado a cargar las distintas peliculas 
+     * @return Devuelve un ArrayList el cual contiene las distintas películas disponibles
+     */
+    public static ArrayList<Pelicula> cargarCartelera() {
         ArrayList<Pelicula> peliculas = new ArrayList<>();
         peliculas.add(new Pelicula(1, "El Rey León", 120, null, ""));
         peliculas.add(new Pelicula(2, "No Respires", 90, null, ""));
         peliculas.add(new Pelicula(3, "Senderos de Gloria", 130, null, ""));
         peliculas.add(new Pelicula(4, "Cop Car", 95, null, ""));
         peliculas.add(new Pelicula(5, "¡Aterriza Como Puedas!", 88, null, ""));
+        
         return peliculas;
     }
 
-    private static void mostrarCartelera(ArrayList<Pelicula> peliculas) {
+    /**
+     * Método dedicado a mostrar las distintas peliculas disponibles
+     * @param peliculas ArrayList dedicado a almacenar las distintas peliculas
+     */
+    public static void mostrarCartelera(ArrayList<Pelicula> peliculas) {
         System.out.println("Cartelera: \n");
         for (int i = 0; i < peliculas.size(); i++) {
             System.out.println((i + 1) + " - " + peliculas.get(i).getNomPelicula());
         }
     }
 
-    private static ArrayList<Sala> cargarSalas() {
+    /**
+     * Método dedicado a la inicialización del array de salas.
+     * @return ArrayList dedicado a almacenar las distintas salas
+     */
+    public static ArrayList<Sala> cargarSalas() {
         ArrayList<Sala> salas = new ArrayList<>();
         salas.add(new Sala(1, "Sala 1", 150));
         salas.add(new Sala(2, "Sala 2", 100));
@@ -64,7 +88,13 @@ public class actualBorrador {
         return salas;
     }
 
-    private static ArrayList<Sesion> cargarSesiones(ArrayList<Pelicula> peliculas, ArrayList<Sala> salas) {
+    /**
+     * 
+     * @param peliculas ArrayList dedicado a almacenar las distinas peliculas que hay disponibles
+     * @param salas ArrayList dedicado a almacenar las distinas salas que hay disponibles
+     * @return 
+     */
+    public static ArrayList<Sesion> cargarSesiones(ArrayList<Pelicula> peliculas, ArrayList<Sala> salas) {
         ArrayList<Sesion> sesiones = new ArrayList<>();
         int idSesion = 1;
 
@@ -102,12 +132,18 @@ public class actualBorrador {
             }
         }
 
-        // Ordenar sesiones por fecha de inicio
-        Collections.sort(sesiones, Comparator.comparing(Sesion::getfecHoraIni));
+ 
+       
         return sesiones;
     }
     
-    private static void mostrarSesiones(ArrayList<Sesion> sesiones, Pelicula peliculaElegida, LocalDateTime fechaElegida) {
+    /**
+     * 
+     * @param sesiones
+     * @param peliculaElegida
+     * @param fechaElegida
+     */
+    public static void mostrarSesiones(ArrayList<Sesion> sesiones, Pelicula peliculaElegida, LocalDateTime fechaElegida) {
 
         String[] numSesiones = {
             "Primera ", "Segunda ", "Tercera ", "Cuarta ",
@@ -144,7 +180,11 @@ public class actualBorrador {
         }
     }
 
-    private static ArrayList<LocalDateTime> cargarFechas() {
+    /**
+     * 
+     * @return
+     */
+    public static ArrayList<LocalDateTime> cargarFechas() {
         ArrayList<LocalDateTime> fechas = new ArrayList<>();
         for (int f = 0; f < 7; f++) {
             fechas.add(LocalDateTime.of(2026, 2, 1, 10, 0).plusDays(f));
@@ -152,6 +192,10 @@ public class actualBorrador {
         return fechas;
     }
 
+    /**
+     * 
+     * @param fechas
+     */
     public static void mostrarFechas(ArrayList<LocalDateTime> fechas) {
         DateTimeFormatter fechaF = DateTimeFormatter.ofPattern("d MMMM yyyy", new Locale("es"));
         System.out.println("\nFechas disponibles: \n");
@@ -160,6 +204,11 @@ public class actualBorrador {
         }
     }
 
+    /**
+     * 
+     * @param carrito
+     * @return
+     */
     public static double resumenCompra(ArrayList<Entrada> carrito) {
         System.out.println("\n------------ RESUMEN DE LA COMPRA -------------");
         double precioTotal = 0;
@@ -199,6 +248,12 @@ public class actualBorrador {
         return precioTotal;
     }
 
+    /**
+     * 
+     * @param precioTotal
+     * @param numPelis
+     * @return
+     */
 	public static double calcularDescuento (double precioTotal, int numPelis ) {		
 
 		
@@ -235,6 +290,11 @@ public class actualBorrador {
 
 	}
 
+	/**
+	 * 
+	 * @param cliente
+	 * @param carrito
+	 */
 	public static void RegistroCompra(Cliente cliente, ArrayList<Entrada>carrito) {
 		System.out.println("\n---REGISTRO DE LA COMPRA---");
 		
@@ -248,6 +308,11 @@ public class actualBorrador {
 		}
 	}
 
+	/**
+	 * 
+	 * @param carrito
+	 * @return
+	 */
 	public static int contarPeliculas(ArrayList<Entrada> carrito) {
 		
 		int contador = 0;
@@ -274,6 +339,10 @@ public class actualBorrador {
 	    return contador;
 	}
 
+	/**
+	 * 
+	 * @param args
+	 */
 	public static void main(String[] args) {
 
 		
@@ -537,11 +606,52 @@ public class actualBorrador {
 					valido = true;
 					
 					resetearPrograma = false;
+					
+					System.out.println("\n-+-+-+-+-+Reiniciando sistema-+-+-+-+-+\n");
+					
 					RegistroCompra(login, carrito);
 					
-				}  else  {
+					System.out.println("\n¿Quieres generar la factura? (si/no)");
+					String respuestaFactura = teclado.nextLine();
+
+					
+					try {
+						
+						if(respuestaFactura.equalsIgnoreCase("si")) {
+							
+						factura.ticket.generarTicket(carrito, login, precioFinal);
+						
+						System.out.println("\nFactura generada correctamente en el paquete \"facturaFicheros\"");
+						
+						resetearPrograma = true;
+						
+						System.out.println("\n-+-+-+-+-+Reiniciando sistema-+-+-+-+-+\n");
+							
+						} else if (respuestaFactura.equalsIgnoreCase("no")) {
+							
+							System.out.println("¡¡Muchas gracias por la compra, vuelva pronto " + emoji + "!!");
+							
+							resetearPrograma = true;
+							
+							System.out.println("\n-+-+-+-+-+Reiniciando sistema-+-+-+-+-+\n");
+							
+							
+							
+							
+							
+						}
+						
+					} catch (IOException e) {
+						
+						System.out.println("Error en la generación de la factura: " + e.getMessage());
+					}
+				}			
+					
+				  else  {
 					
 					System.out.println("Login incorrecto \n");
+					System.out.println("\n-+-+-+-+-+Reiniciando sistema-+-+-+-+-+\n");
+					
 					contador++;
 						
 				}
