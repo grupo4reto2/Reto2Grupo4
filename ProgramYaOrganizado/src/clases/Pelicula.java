@@ -56,15 +56,6 @@ public class Pelicula {
 	public void setPortada(String Portada) {
 		this.Portada = Portada;
 	}
-
-
-	@Override
-	public String toString() {
-		return   nomPelicula;
-	}
-	
-	
-	
 	
 	
 	

@@ -63,13 +63,6 @@ public class Cliente {
 		this.contraseña = contrasena;
 	}
 
-	@Override 
 	
-	public String toString() {
-		return  "DNI: " + dni + "\n" +
-				" Cliente: " + nombre + " " + apellido + "\n" +
-				" Correo electrónico: " + correo+ "\n" +
-				" Contrasena: " + contraseña;
-	}
 	
 }

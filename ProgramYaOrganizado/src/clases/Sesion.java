@@ -79,17 +79,4 @@ public class Sesion {
 	}
 
 	
-	
-	@Override
-	
-	public String toString() {
-		return  "Sesion ID :" + idSesion +
-				"Codigo Sesion:" + codSesion +
-				" Inicio: " + fecHoraIni +
-				" Fin: " + fecHoraFin +
-				" Sala: " + idSala.getNombre() + 
-				" Precio: " + precio +
-				" Película: " +  idPelicula.getIdPelicula();
-	}
-	
 }

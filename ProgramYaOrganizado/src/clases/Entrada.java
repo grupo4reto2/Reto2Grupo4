@@ -58,21 +58,6 @@ public class Entrada {
 	public void setIdCompra(Compra idCompra) {
 		this.idCompra = idCompra;
 	}
-
-
-
-
-	@Override 
-	
-	public String toString() {
-		
-		return "ID entrada: " + idEntrada +
-				" Número de personas: " + cantidad + 
-			    " Sesión: " + sesion.getIdSesion() +
-				" ID de Compra: " + idCompra.getIdCompra() +
-				" Fecha de compra: " + fecHoraIni;
-			 
-	}
 	
 
 	}

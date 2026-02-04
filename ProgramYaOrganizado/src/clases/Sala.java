@@ -50,13 +50,7 @@ public class Sala {
 	}
 		
 	
-	public String toString () {
-		
-		return "ID Sala: " + idSala +
-				" Sala: " + nombre + 
-				" Aforo: " + aforo+
-				" Lista de Sesiones: " + sesiones ;
-		}
+	
 	
 	
 }
