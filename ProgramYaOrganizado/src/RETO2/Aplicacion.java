@@ -23,7 +23,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public class actualBorrador {
+public class Aplicacion {
 
 	/**
 	 * Método dedicado a la conexión entre la base de datos y la aplicación
@@ -98,18 +98,18 @@ public class actualBorrador {
         ArrayList<Sesion> sesiones = new ArrayList<>();
         int idSesion = 1;
 
-        // Recorremos cada día (7 días)
+        
         for (int d = 0; d < 7; d++) {
             LocalDateTime inicioBase = LocalDateTime.of(2026, 2, 1, 10, 0).plusDays(d);
             LocalDateTime finBase    = LocalDateTime.of(2026, 2, 1, 12, 0).plusDays(d);
 
-            // Recorremos cada película
+        
             for (int p = 0; p < peliculas.size(); p++) {
 
-                // Elegimos sala de forma circular si hay más películas que salas
+               
                 Sala sala = salas.get(p % salas.size());
 
-                // Creamos 8 sesiones por película
+               
                 for (int s = 0; s < 8; s++) {
                     double precio;
                     if (s <= 2) precio = 6;
@@ -159,7 +159,7 @@ public class actualBorrador {
         for (Sesion s : sesiones) {
             LocalDateTime f = s.getfecHoraIni();
 
-            // Comparamos objetos Pelicula y misma fecha
+            
             if (s.getIDPelicula().equals(peliculaElegida) &&
                 f.toLocalDate().equals(fechaElegida.toLocalDate())) {
 
@@ -213,13 +213,13 @@ public class actualBorrador {
         System.out.println("\n------------ RESUMEN DE LA COMPRA -------------");
         double precioTotal = 0;
 
-        // Lista para almacenar películas distintas
+       
         ArrayList<String> peliculasDistintas = new ArrayList<>();
 
         for (Entrada c : carrito) {
             String nombrePeli = c.getSesion().getIDPelicula().getNomPelicula();
 
-            // Agregar solo si no está ya en la lista
+           
             if (!peliculasDistintas.contains(nombrePeli)) {
                 peliculasDistintas.add(nombrePeli);
             }
@@ -239,7 +239,7 @@ public class actualBorrador {
 
         System.out.println("\nPRECIO TOTAL (SIN DESCUENTOS APLICADOS): " + precioTotal + " €");
 
-        // Mostrar películas distintas
+        
         System.out.println("\nPelículas distintas compradas:");
         for (String p : peliculasDistintas) {
             System.out.println(" - " + p);
@@ -322,7 +322,7 @@ public class actualBorrador {
 
 	        boolean yaContada = false;
 
-	        // Comprobamos si esa película ya apareció antes
+	       
 	        for (int j = 0; j < i; j++) {
 	            int idPeliculaAnterior = carrito.get(j).getSesion().getIDPelicula().getIdPelicula();
 

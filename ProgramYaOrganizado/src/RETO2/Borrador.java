@@ -19,7 +19,7 @@ import utils.conexion;
 import DAO_POJO.*;
 import java.sql.Connection;
 
-public class actualBorrador2 {
+public class Borrador {
 
     public static void getConexion() {
         Connection conexxion = conexion.getConnection();

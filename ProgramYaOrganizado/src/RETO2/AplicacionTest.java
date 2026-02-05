@@ -16,7 +16,7 @@ import clases.Sala;
 import clases.Sesion;
 import clases.Entrada;
 
-class actualBorradorTest {
+class AplicacionTest {
 
 	private ArrayList<Pelicula> peliculas;
     private ArrayList<Sala> salas;
@@ -25,10 +25,10 @@ class actualBorradorTest {
 	
 	@BeforeEach
 	void setUp() {
-		 peliculas = actualBorrador.cargarCartelera();
-	     salas = actualBorrador.cargarSalas();
-	     sesiones = actualBorrador.cargarSesiones(peliculas, salas);
-	     fechas = actualBorrador.cargarFechas();
+		 peliculas = Aplicacion.cargarCartelera();
+	     salas = Aplicacion.cargarSalas();
+	     sesiones = Aplicacion.cargarSesiones(peliculas, salas);
+	     fechas = Aplicacion.cargarFechas();
 	}
 	
 	
@@ -50,7 +50,7 @@ class actualBorradorTest {
 		carrito.add(new Entrada(1,2,sesiones.get(0), null, LocalDateTime.now()));
 		carrito.add(new Entrada(2,1,sesiones.get(8), null, LocalDateTime.now()));
 		
-		double total = actualBorrador.resumenCompra(carrito);
+		double total = Aplicacion.resumenCompra(carrito);
 		assertEquals(18,total,0.01);
 	}
 
@@ -58,13 +58,13 @@ class actualBorradorTest {
 	void testCalcularDescuento() {
 		double precio = 100;
 		
-		double precio1 = actualBorrador.calcularDescuento(precio, 1);
+		double precio1 = Aplicacion.calcularDescuento(precio, 1);
 		assertEquals(100, precio1, 0.01);
 		
-		double precio2 = actualBorrador.calcularDescuento(precio, 2);
+		double precio2 = Aplicacion.calcularDescuento(precio, 2);
 		assertEquals(80, precio2, 0.01);
 		
-		double precio3 = actualBorrador.calcularDescuento(precio, 3);
+		double precio3 = Aplicacion.calcularDescuento(precio, 3);
 		assertEquals(70, precio3, 0.01);
 		
 	}
@@ -83,7 +83,7 @@ class actualBorradorTest {
 		carrito.add(new Entrada(2,1,sesiones.get(1), null, LocalDateTime.now()));
 		carrito.add(new Entrada(3,1,sesiones.get(5), null, LocalDateTime.now()));
 		
-		int numPeliculas = actualBorrador.contarPeliculas(carrito);
+		int numPeliculas = Aplicacion.contarPeliculas(carrito);
 		assertEquals(2, numPeliculas);
 	}
 
