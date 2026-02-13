@@ -4,7 +4,7 @@ USE`reto2_g4_true`;
 /* Dinero recaudado por cada película con recaudación superior a una cifra
 dada.*/
 
-SELECT p.IDPelicula,p.NomPelicula, SUM(e.NumPers * s.Precio) AS Recaudacion
+SELECT p.IDPelicula,p.NomPelicula, SUM(e.Cantidad * s.Precio) AS Recaudacion
 FROM pelicula p JOIN sesion s ON p.IDPelicula = s.IDPelicula
 JOIN entrada e ON s.IDSesion = e.IDSesion AND s.FecHoraIni = e.FecHoraIni
 GROUP BY p.IDPelicula, p.NomPelicula
@@ -35,7 +35,7 @@ group by G.NomGenero;
 
 /*Datos de las películas con mayor recaudación.*/ 
 
-select  P.IDPelicula, P.NomPelicula, P.Duracion, P.IDGenero, SUM(e.NumPers * s.Precio) AS Recaudacion
+select  P.IDPelicula, P.NomPelicula, P.Duracion, P.IDGenero, SUM(e.Cantidad * s.Precio) AS Recaudacion
 FROM pelicula p JOIN sesion s ON p.IDPelicula = s.IDPelicula
 JOIN entrada e ON s.IDSesion = e.IDSesion AND s.FecHoraIni = e.FecHoraIni
 group by P.IDPelicula, P.NomPelicula
@@ -62,7 +62,7 @@ LIMIT 1;
 
 /*Datos de los clientes que han gastado más dinero.*/
 
-SELECT C.DNICliente, C.Nombre, C.Apellido, max(CO.Importe) DineroGastado
+SELECT C.DNICliente, C.Nombre, C.Apellido, C.Correo, max(CO.Importe) DineroGastado
 FROM Cliente C JOIN Compra CO ON C.DNICliente = CO.DNICliente
 GROUP BY C.DNICliente, C.Nombre, C.Apellido, C.Correo
 ORDER BY DineroGastado DESC
@@ -71,7 +71,7 @@ Limit 1;
 /*Datos de las películas con un número de espectadores inferior a una cantidad
 dada.*/
 
-select P.IDPelicula, P.NomPelicula, P.Duracion, P.IDGenero, sum(E.NumPers) as TotalEspectadores
+select P.IDPelicula, P.NomPelicula, P.Duracion, P.IDGenero, sum(E.Cantidad) as TotalEspectadores
 from Pelicula P join Sesion S on P.IDPelicula = S.IDPelicula
 join Entrada E on S.IDSesion = E.IDSesion AND S.FecHoraIni = E.FecHoraIni
 group by P.IDPelicula, P.NomPelicula, P.Duracion, P.IDGenero

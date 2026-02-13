@@ -26,6 +26,10 @@ values
 
 
 
+ALTER TABLE cliente 
+MODIFY Correo VARCHAR(255) Not NULL,
+MODIFY Contraseña VARCHAR(255) not NULL;
+
 -- =========================
 -- COMPRA
 -- =========================
@@ -36,21 +40,23 @@ CREATE TABLE `compra` (
   `Fecha` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `DNICliente` varchar(9) NOT NULL,
   `descuento` double NOT NULL,
-  `Canal` tinyint(4) NOT NULL,
+  `Canal` TINYINT(1) NOT NULL,
   `Importe` double NOT NULL,
   PRIMARY KEY (`IDCompra`),
-  KEY `fk_Compra_Cliente` (`DNICliente`),
+  CONSTRAINT `chk_Canal` CHECK (`Canal` IN (0,1)),
   CONSTRAINT `fk_Compra_Cliente` FOREIGN KEY (`DNICliente`) REFERENCES `cliente` (`DNICliente`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
 
 /*Inserts*/
 
 insert into Compra(IDCompra,Fecha,DNICliente,descuento,Canal,Importe)
 values
-(1,"2026-01-16 18:00:00",'67856221B',0.2,0,9.5),
-(2,"2026-01-17 16:00:00",'76466993C',0,1,6),
-(3,"2026-01-18 20:00:00",'67856221B',0.3,0,12),
-(4,"2026-01-19 00:00:00",'76466993C',0,1,9.5);
+(1,"2026-01-16 18:00:00",'67856221B',0.0,0,9.5),
+(2,"2026-01-17 16:00:00",'76466993C',0,0,6),
+(3,"2026-01-18 20:00:00",'67856221B',0,0,12),
+(4,"2026-01-19 00:00:00",'76466993C',0,0,9.5);
 -- =========================
 -- ENTRADA
 -- =========================
@@ -119,13 +125,13 @@ CREATE TABLE `pelicula` (
   CONSTRAINT `FK_Pelicula_Genero` FOREIGN KEY (`IDGenero`) REFERENCES `genero` (`IDGenero`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-<<<<<<< HEAD
+
 ALTER TABLE `reto2_g4_true`.`pelicula` 
-ADD COLUMN `DesPelicula` VARCHAR(255) NOT NULL AFTER `IDGenero`;
+CHANGE COLUMN `DesPelicula` `DesPelicula` VARCHAR(1200) NOT NULL ;
 
 
-=======
->>>>>>> 356c0af2a9002f4886ce81a2a86301de0d10891e
+
+
 /*Insert*/
 insert into Pelicula (IDPelicula, NomPelicula, Duracion, IDGenero, Portada)
 values
@@ -137,7 +143,7 @@ values
 ' ),
 (5,'¡Aterriza como puedas!' , 92, 4, 'https://imgs.search.brave.com/1fyE5g2uMLQXGifPBcEBod79aHjSjz-KlDjWQjLJ3vk/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL00v/TVY1Qll6Y3labVl6/WldNdE1qUmlNeTAw/WXpsakxUazFObUl0/TjJFM016bGhObVUz/TlRjelhrRXlYa0Zx/Y0djQC5qcGc
 ');
-<<<<<<< HEAD
+
 
 UPDATE `reto2_g4_true`.`pelicula` SET `DesPelicula` = 'Simba es un pequeño y travieso león, hijo del rey de la selva, Mufasa. Cierto día, junto con su amiga Nala se adentran en el territorio de las hienas y tienen que ser salvados por su padre. Esto le da una idea a Scar, el tío de Simba, que quiere ser el rey, pero sabe que Simba es quien está llamado a ser el siguiente rey de la selva. Scar traza junto a las hienas un plan para matar a padre e hijo y que parezca un accidente, para así instaurar un reinado de terror en la manada. Sin embargo su plan no le sale como había previsto y Simba sale con vida. Scar no le mata pero le obliga a huir. Desterrado, solo y abatido, Simba se encuentra con Timón y Pumba, un jabalí y un suricato que le harán ver las cosas de otra manera.' WHERE (`IDPelicula` = '1');
 UPDATE `reto2_g4_true`.`pelicula` SET `DesPelicula` = 'Tres jóvenes planifican a la perfección cada robo que realizan en los chalet que asaltan. Ahora han encontrado el objetivo perfecto: la vivienda de un multimillonario ciego que podría sacarles de la delincuencia para siempre. Cuando entran, atacan al inquilino. Pero, tan pronto como intentan huir de la casa, los roles se cambian y los adolescentes se encuentran luchando por su supervivencia contra un peligroso psicópata.' WHERE (`IDPelicula` = '2');
@@ -145,8 +151,7 @@ UPDATE `reto2_g4_true`.`pelicula` SET `DesPelicula` = 'Se presenta el conflicto 
 UPDATE `reto2_g4_true`.`pelicula` SET `DesPelicula` = 'Dos niños de ocho años de Colorado encuentran un coche policial aparentemente abandonado y con las llaves en el contacto, así que deciden aprender a conducirlo. Las pistolas y el cordón policial son juguetes para Travis y Harrison hasta que un policía corrupto reclama el vehículo, en el que había transportado un cadáver. Así comienza la macabra persecución en la que los dos jóvenes tratarán de huir.' WHERE (`IDPelicula` = '4');
 UPDATE `reto2_g4_true`.`pelicula` SET `DesPelicula` = 'A causa de una comida en mal estado, los pilotos de un avión comercial quedan fuera de combate. Con la nave a la deriva, solo Ted Striker, un antiguo as de la aviación que dejó de volar a causa de una depresión, tiene alguna posibilidad de poder hacerla aterrizar.' WHERE (`IDPelicula` = '5');
 
-=======
->>>>>>> 356c0af2a9002f4886ce81a2a86301de0d10891e
+
 -- =========================
 -- SALA
 -- =========================
